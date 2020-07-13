@@ -26,7 +26,7 @@ if ( empty( $settings['api_status'] ) ) :
 
 <?php else :
 
-    $data = get_setting( 'current_site_data' );
+    $data = ohdear()->api->get_site_data();
 
     if ( is_array( $data ) && ! empty( $data ) ) {
 

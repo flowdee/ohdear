@@ -42,7 +42,7 @@ class OhDear_Settings {
 
             foreach ( $settings as $key => $option ) {
 
-                if( $option['type'] == 'checkbox' || $option['type'] == 'multicheck' || $option['type'] == 'radio' ) {
+                if( $option['type'] == 'checkbox' || $option['type'] == 'multicheck' || $option['type'] == 'multiselect' || $option['type'] == 'radio' ) {
                     $name = isset( $option['name'] ) ? $option['name'] : '';
                 } else {
                     $name = isset( $option['name'] ) ? '<label for="ohdear_settings[' . $key . ']">' . $option['name'] . '</label>' : '';
@@ -89,7 +89,7 @@ class OhDear_Settings {
 
         //debug_log( ' $_POST:' );
         //debug_log( $_POST );
-
+        //
         //debug_log( ' $input:' );
         //debug_log( $input );
 
@@ -142,38 +142,18 @@ class OhDear_Settings {
         $input['api_status'] = $api_status;
         $input['api_error']  = $api_error;
 
-        // Hook
-        $input = apply_filters( 'ohdear_settings_validate_input', $input );
-
-        /**
-         * Filters the input value for the Oh Dear settings tab.
-         *
-         * This filter is appended with the tab name, followed by the string `_sanitize`, for example:
-         *
-         *     `ohdear_settings_stats_sanitize`
-         *     `ohdear_settings_settings_sanitize`
-         *
-         * @param mixed $input The settings tab content to sanitize.
-         */
-        $input = apply_filters( 'ohdear_settings_' . $tab . '_sanitize', $input );
-
-        // Ensure a value is always passed for every checkbox
+        // Ensure a value is always passed for every checkbox/select (dropdown) option
         if ( ! empty( $settings[ $tab ] ) ) {
             foreach ( $settings[ $tab ] as $key => $setting ) {
 
-                // Single checkbox
-                if ( isset( $settings[ $tab ][ $key ][ 'type' ] ) && 'checkbox' == $settings[ $tab ][ $key ][ 'type' ] ) {
-                    $input[ $key ] = ! empty( $input[ $key ] );
-                }
-
-                // Multicheck list
-                if ( isset( $settings[ $tab ][ $key ][ 'type' ] ) && 'multicheck' == $settings[ $tab ][ $key ][ 'type' ] ) {
+                // Multicheck / Multiselect
+                if ( isset( $settings[ $tab ][ $key ][ 'type' ] )
+                     && ( 'multicheck' == $settings[ $tab ][ $key ][ 'type' ] || 'multiselect' == $settings[ $tab ][ $key ][ 'type' ] )
+                ){
                     if( empty( $input[ $key ] ) ) {
                         $input[ $key ] = array();
                     }
                 }
-
-                // @Todo: Add Multiselect list
             }
         }
 
@@ -204,6 +184,10 @@ class OhDear_Settings {
                 $input[ $key ] = apply_filters( 'ohdear_settings_sanitize_' . $type, $input[ $key ], $key );
             }
 
+            // Admins always have access
+            if ( $key == 'user_roles_access' )
+                $input[ $key ][] = 'administrator';
+
             /**
              * General setting sanitization filter
              *
@@ -216,7 +200,6 @@ class OhDear_Settings {
             if( $sanitize_callback && is_callable( $sanitize_callback ) ) {
 
                 remove_filter( 'ohdear_settings_sanitize_' . $type, $sanitize_callback, 10 );
-
             }
         }
 
@@ -225,7 +208,6 @@ class OhDear_Settings {
         $saved['current_site_data'] = ohdear()->api->get_site_data();
 
         return array_merge( $saved, $input );
-
     }
 
     /**
@@ -252,36 +234,15 @@ class OhDear_Settings {
                     'desc' => ''
                 ),
 
-                'exclude_user_roles' => array(
-                    'name' => __( 'Exclude the Oh Dear analytics page access from these user roles', 'ohdear' ),
+                'user_roles_access' => array(
+                    'name' => __( 'Which user roles can access the Oh Dear analytics?', 'ohdear' ),
                     'type' => 'multiselect',
-                    'desc' => '',
+                    'desc' => ''
                 )
             )
         );
     }
 
-    /**
-     * Multicheck Callback
-     *
-     * Renders multiple checkboxes.
-     *
-     * @param array $args Arguments passed by the setting
-     * @return void
-     */
-    public function multicheck_callback( $args ) {
-
-        if ( ! empty( $args['options'] ) ) {
-            foreach( $args['options'] as $key => $option ) {
-                if( isset( $this->settings[$args['id']][$key] ) ) { $enabled = $option; } else { $enabled = NULL; }
-                echo '<label for="ohdear_settings[' . $args['id'] . '][' . $key . ']">';
-                echo '<input name="ohdear_settings[' . $args['id'] . '][' . $key . ']" id="ohdear_settings[' . $args['id'] . '][' . $key . ']" type="checkbox" value="' . $option . '" ' . checked($option, $enabled, false) . '/>&nbsp;';
-                echo $option . '</label><br/>';
-            }
-            echo '<p class="description">' . $args['desc'] . '</p>';
-        }
-    }
-    
     /**
      * Multiselect Callback
      *
@@ -292,11 +253,19 @@ class OhDear_Settings {
      */
     public function multiselect_callback( $args ) {
 
-        // @Todo: needs enhancement
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+        //debug_log( $this->settings[ $args['id'] ] );
 
         echo '<label for="ohdear_settings[' . $args['id'] . '][]">';
         echo '<select multiple name="ohdear_settings[' . $args['id'] . '][]" id="ohdear_settings[' . $args['id'] . '][]">';
-        $this->get_user_roles();
+
+        if ( isset( $this->settings[ $args['id'] ] ) && is_array( $this->settings[ $args['id'] ] ) ) {
+            $selected = $this->settings[ $args['id'] ];
+        } else {
+            $selected = array();
+        }
+
+        $this->get_user_roles( $selected );
         echo '</select>';
     }
 
@@ -367,19 +336,20 @@ class OhDear_Settings {
 
     /**
      * Retrieve the array of user roles.
+     *
+     * @param array $selected
      */
     private function get_user_roles( $selected = array() ) {
 
-//        $selected = array( 'editor', 'contributor' );
+        foreach ( get_editable_roles() as $role => $details ) {
 
-        $r = '';
-        $editable_roles = get_editable_roles();
-
-        foreach ( $editable_roles as $role => $details ) {
-            $name = translate_user_role( $details['name'] );
-            $r .= "\n\t<option " . selected( in_array( $role, $selected ) ) . " value='" . esc_attr( $role ) . "'>$name</option>";
+            // Admins always have access
+            if ( $role == 'administrator' )
+                continue;
+            ?>
+            <option <?php selected( in_array( $role, $selected ), true, true ); ?>value="<?php esc_attr_e( $role ); ?>"><?php echo translate_user_role( $details['name'] ); ?></option>
+            <?php PHP_EOL; ?>
+            <?php
         }
-
-        echo $r;
     }
 }

@@ -69,18 +69,18 @@ class OhDear_API {
 
         //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
-        $list = get_transient( 'ohdear_site' );
+        $list = get_transient( 'ohdear_sites' );
 
         if ( empty( $list ) ) {
 
             $list = $this->request( 'sites' );
 
             if ( empty( $list['error'] ) )
-                set_transient( 'ohdear_site', $list, DAY_IN_SECONDS );
+                set_transient( 'ohdear_sites', $list, DAY_IN_SECONDS );
         }
 
-//debug_log( '$list:' );
-//debug_log( $list );
+        //debug_log( '$list:' );
+        //debug_log( $list );
 
         return $list;
     }
