@@ -1,0 +1,49 @@
+<?php
+/**
+ * Stats Template
+ */
+
+namespace OhDear;
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+$settings = get_settings();
+
+if ( empty( $settings['api_status'] ) ) :
+
+    $tab_url = add_query_arg( array( 'tab' => 'settings' ) );
+?>
+
+    <div class="notice notice-warning inline">
+        <p>
+            <?php printf( __( 'Please set the valid Oh Dear API token at the <a href="%1$s" alt="%2$s">%2$s</a> tab.', 'ohdear' ),
+                esc_url( $tab_url ),
+                esc_attr( 'Settings', 'ohdear' ) );
+            ?>
+        </p>
+    </div>
+
+<?php else :
+
+    $data = get_setting( 'current_site_data' );
+
+    if ( is_array( $data ) && ! empty( $data ) ) {
+
+echo '<pre>';
+var_dump( $data );
+echo '</pre>';
+
+    } else { ?>
+
+        <div class="notice notice-warning inline">
+            <p>
+                <?php _e( 'Sorry, no any data was received for the current site', 'ohdear' );
+                ?>
+            </p>
+        </div>
+
+    <?php
+    }
+
+endif;
