@@ -111,8 +111,8 @@ class OhDear_API {
 
             // @Todo: 'kryptonitewp.com' is just for tests here
 
-            if ( strpos( home_url(), $site_data['sort_url'] ) !== false ) {
-            //if ( strpos( 'kryptonitewp.com', $site_data['sort_url'] ) !== false ) {
+            //if ( strpos( home_url(), $site_data['sort_url'] ) !== false ) {
+            if ( strpos( 'kryptonitewp.com', $site_data['sort_url'] ) !== false ) {
 
                 $data = $site_data;
                 break;
