@@ -112,7 +112,6 @@ class OhDear_Settings {
          * Handle API connection
          */
         $api_status = ( isset( $this->settings['api_status'] ) ) ? $this->settings['api_status'] : false;
-        $api_error  = ( isset( $this->settings['api_error'] ) ) ? $this->settings['api_error'] : '';
 
         if ( ! empty( $input['api_key'] ) ) {
 
@@ -122,16 +121,21 @@ class OhDear_Settings {
             if ( $api_key_new != $api_key ) {
 
                 delete_cache();
+                delete_setting( 'current_site_data' );
 
                 $result = ohdear()->api->verify_api_credentials( $api_key_new );
 
                 // bool
                 $api_status = ( is_array( $result ) && empty( $result['error'] ) );
 
-                $api_error = ( ! empty( $result['error'] ) ) ? $result['error'] : '';
-
                 // Sanitized API Key input value
                 $input['api_key'] = $api_key_new;
+
+                if ( ! $api_status ) {
+                    unset( $saved['current_site_data'] );
+                } else {
+                    $saved['current_site_data'] = ohdear()->api->get_site_data();
+                }
             }
 
         } else {
@@ -140,7 +144,6 @@ class OhDear_Settings {
         }
 
         $input['api_status'] = $api_status;
-        $input['api_error']  = $api_error;
 
         // Ensure a value is always passed for every checkbox/select (dropdown) option
         if ( ! empty( $settings[ $tab ] ) ) {
@@ -204,8 +207,6 @@ class OhDear_Settings {
         }
 
         add_settings_error( 'ohdear-notices', '', __( 'Settings updated.', 'ohdear' ), 'updated' );
-
-        $saved['current_site_data'] = ohdear()->api->get_site_data();
 
         return array_merge( $saved, $input );
     }

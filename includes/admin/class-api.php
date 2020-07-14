@@ -109,9 +109,10 @@ class OhDear_API {
 
         foreach ( $sites['data'] as $key => $site_data ) {
 
-            // @Todo: 'mhthemes.com' is just for tests here
+            // @Todo: 'kryptonitewp.com', 'mhthemes.com' are for debugging here
 
             //if ( strpos( home_url(), $site_data['sort_url'] ) !== false ) {
+            //if ( strpos( 'kryptonitewp.com', $site_data['sort_url'] ) !== false ) {
             if ( strpos( 'mhthemes.com', $site_data['sort_url'] ) !== false ) {
 
                 $data = $site_data;
