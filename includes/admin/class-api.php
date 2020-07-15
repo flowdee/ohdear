@@ -150,7 +150,7 @@ class OhDear_API {
         if ( empty( $site_id ) )
             return false;
 
-        // Past 30 days
+        // Last 30 days
         $args = array(
             'split'  => 'day',
             'filter' => array(
@@ -189,12 +189,12 @@ class OhDear_API {
         if ( empty( $site_id ) )
             return false;
 
-        // Last 24 hours
+        // Last 7 days
         $args = array(
             'filter' => array(
-                'start'     => date( 'YmdHis', mktime( null, null, null, date('m'), date('d')-1, date('Y') ) ),
+                'start'     => date( 'YmdHis', mktime( null, null, null, date('m'), date('d')-6, date('Y') ) ),
                 'end'       => date( 'YmdHis' ),
-                'timeframe' => '1m'
+                'timeframe' => '1h'
             )
         );
 
