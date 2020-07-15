@@ -3,6 +3,8 @@
  * Settings Template
  */
 
+namespace OhDear;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 ?>
