@@ -92,75 +92,67 @@ if ( empty( $settings['api_status'] ) ) : ?>
             $percentage = array();
 
             foreach ( $uptime as $key => $u ) {
-
-                $date_parse = date_parse_from_format( "Y-m-d H:i:s", $u['datetime'] );
-
-                if ( is_array( $date_parse ) && $date_parse['error_count'] == 0 ) {
-                    $datetime[] = (string) date( 'm/d/Y', mktime( 0, 0, 0, date( $date_parse['month'] ), date( $date_parse['day'] ), date( $date_parse['year'] ) ) );
-                    $percentage[] = $u['uptime_percentage'];
-                }
+                $percentage[] = $u['uptime_percentage'];
+                $datetime[]   = $u['datetime'];
             }
 
-        if ( ! empty( $datetime ) ) : ?>
+            if ( ! empty( $datetime ) ) : ?>
 
-            <p><?php echo __( 'Past 7 days', 'ohdear' ) . '. ' . __( 'Last time checked', 'ohdear' ) . ': ' . $data['checks'][0]['latest_run_ended_at']; ?></p>
+                <p><?php echo __( 'Past 30 days', 'ohdear' ) . '. ' . __( 'Last time checked', 'ohdear' ) . ': ' . $data['checks'][0]['latest_run_ended_at']; ?></p>
 
-            <div id="uptime_chart"></div>
+                <div id="uptime_chart"></div>
 
-            <style>
-                #uptime_chart {
-                    height: 350px;
-                    margin: 35px 15px;
-                }
-            </style>
+                <style>
+                    #uptime_chart {
+                        margin: 35px 10px;
+                    }
+                </style>
 
-            <script>
-              var options = {
-                  chart: {
-                    type: "bar",
-                    animations: {
-                      initialAnimation: {
-                        enabled: false
+                <script>
+                  var
+                    options = {
+                      chart: {
+                        height: 300,
+                        width: "100%",
+                        type: "bar",
+                        animations: {
+                          initialAnimation: {
+                            enabled: false
+                          }
+                        }
+                      },
+                      series: [{
+                        name: "Uptime Stats",
+                        data: [
+                            <?php
+                                $count = count( $datetime );
+
+                                for ( $i = 0; $i < $count; $i++ ) {
+
+                                    echo '{x: "' . $datetime[$i] . ' GMT", y: ' . $percentage[$i] . '}';
+
+                                    if ( $i < $count - 1 )
+                                        echo ',';
+                                }
+
+                                echo PHP_EOL;
+                            ?>
+                        ]
+                      }],
+                      xaxis: {
+                        type: "datetime"
+                      },
+                      yaxis: {
+                        max: 100
                       }
-                    }
-                  },
-                  series: [
-                    {
-                      name: "Uptime Stats",
-                      data: [
-                        { x: '07/01/2020', y: <?php echo $percentage[15]; ?> },
-                        { x: '07/02/2020', y: <?php echo $percentage[16]; ?> },
-                        { x: '07/03/2020', y: <?php echo $percentage[17]; ?> },
-                        { x: '07/04/2020', y: <?php echo $percentage[18]; ?> },
-                        { x: '07/05/2020', y: <?php echo $percentage[19]; ?> },
-                        { x: '07/06/2020', y: <?php echo $percentage[20]; ?> },
-                        { x: '07/07/2020', y: <?php echo $percentage[21]; ?> },
-                        { x: '07/08/2020', y: <?php echo $percentage[22]; ?> },
-                        { x: '07/09/2020', y: <?php echo $percentage[23]; ?> },
-                        { x: '07/10/2020', y: <?php echo $percentage[24]; ?> },
-                        { x: '07/11/2020', y: <?php echo $percentage[25]; ?> },
-                        { x: '07/12/2020', y: <?php echo $percentage[26]; ?> },
-                        { x: '07/13/2020', y: <?php echo $percentage[27]; ?> },
-                        { x: '07/14/2020', y: <?php echo $percentage[28]; ?> },
-                        { x: '07/15/2020', y: <?php echo $percentage[29]; ?> }
-                      ]
-                    }
-                  ],
-                  xaxis: {
-                    type: "datetime"
-                  }
-                },
-                chart = new ApexCharts(document.querySelector( "#uptime_chart" ), options);
+                    },
 
-              chart.render();
-            </script>
+                    chart = new ApexCharts(document.querySelector( "#uptime_chart" ), options);
 
-        <?php endif;
-echo '<pre>';
-var_dump( $datetime );
-var_dump( $uptime );
-echo '</pre>';
+                  chart.render();
+                </script>
 
+            <?php endif;
         else : ?>
             <div class="notice notice-warning inline">
                 <p>

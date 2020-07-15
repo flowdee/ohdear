@@ -150,7 +150,7 @@ class OhDear_API {
         if ( empty( $site_id ) )
             return false;
 
-        // Last 7 days
+        // Past 30 days
         $args = array(
             'split'  => 'day',
             'filter' => array(
