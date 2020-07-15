@@ -120,8 +120,8 @@ class OhDear_Settings {
 
             if ( $api_key_new != $api_key ) {
 
+                // Delete ohdear transients
                 delete_cache();
-                delete_setting( 'current_site_data' );
 
                 $result = ohdear()->api->verify_api_credentials( $api_key_new );
 
@@ -131,11 +131,9 @@ class OhDear_Settings {
                 // Sanitized API Key input value
                 $input['api_key'] = $api_key_new;
 
-                if ( ! $api_status ) {
-                    unset( $saved['current_site_data'] );
-                } else {
-                    $saved['current_site_data'] = ohdear()->api->get_site_data();
-                }
+                if ( $api_status )
+                    // Cache current site data into transient
+                    ohdear()->api->get_site_data();
             }
 
         } else {
@@ -206,7 +204,7 @@ class OhDear_Settings {
             }
         }
 
-        add_settings_error( 'ohdear-notices', '', __( 'Settings updated.', 'ohdear' ), 'updated' );
+//        add_settings_error( 'ohdear-notices', '', __( 'Settings updated.', 'ohdear' ), 'updated' );
 
         return array_merge( $saved, $input );
     }

@@ -22,10 +22,10 @@ class OhDear_API {
      */
     private $api_key;
 
-        /**
-         * Oh Dear settings
-         */
-        private $settings;
+    /**
+     * Oh Dear settings
+     */
+    private $settings;
 
     /**
      * OhDear_API constructor.
@@ -69,24 +69,24 @@ class OhDear_API {
 
         //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
-        $list = get_transient( 'ohdear_sites' );
+        $data = get_transient( 'ohdear_sites' );
 
-        if ( empty( $list ) ) {
+        if ( empty( $data ) ) {
 
-            $list = $this->request( 'sites' );
+            $data = $this->request( 'sites' );
 
-            if ( empty( $list['error'] ) )
-                set_transient( 'ohdear_sites', $list, DAY_IN_SECONDS );
+            if ( empty( $data['error'] ) )
+                set_transient( 'ohdear_sites', $data, DAY_IN_SECONDS );
         }
 
-        //debug_log( '$list:' );
-        //debug_log( $list );
+        //debug_log( '$data:' );
+        //debug_log( $data );
 
-        return $list;
+        return $data;
     }
 
     /**
-     * Get the current site data
+     * Get current site data
      *
      * @return mixed
      */
@@ -94,14 +94,14 @@ class OhDear_API {
 
         //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
-        $data = get_setting( 'current_site_data' );
+        $data = get_transient( 'ohdear_current_site' );
 
         if ( is_array( $data ) && ! empty( $data ) )
             return $data;
 
         $sites = $this->get_sites();
 
-        if ( ! is_array( $sites ) || empty( $sites['data'] ) || ! is_array( $sites['data'] ) || empty( $sites['data'] ) )
+        if ( ! is_array( $sites ) || empty( $sites['data'] ) || ! is_array( $sites['data'] ) )
             return false;
 
         //debug_log( '$sites:' );
@@ -120,8 +120,121 @@ class OhDear_API {
             }
         }
 
+        if ( ! is_array( $data ) || empty( $data['id'] ) )
+            return false;
+
         //debug_log( '$data:' );
         //debug_log( $data );
+
+        set_transient( 'ohdear_current_site', $data, DAY_IN_SECONDS );
+
+        return $data;
+    }
+
+    /**
+     * Get uptime stats
+     *
+     * @return mixed
+     */
+    public function get_uptime() {
+
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+
+        $uptime = get_transient( 'ohdear_uptime' );
+
+        if ( ! empty( $uptime ) )
+            return $uptime;
+
+        $site_id = $this->get_site_id();
+
+        if ( empty( $site_id ) )
+            return false;
+
+        // Last 7 days
+        $args = array(
+            'split'  => 'day',
+            'filter' => array(
+                'started_at' => date( 'YmdHis', mktime( 0, 0, 0, date('m'), date('d')-29, date('Y') ) ),
+                'ended_at'   => date( 'YmdHis', mktime( 23, 59, 59, date('m'), date('d'), date('Y') ) )
+            )
+        );
+
+        $data = $this->request( 'sites/' . $site_id . '/uptime', $args );
+
+        //debug_log( '$data:' );
+        //debug_log( $data );
+
+        if ( empty( $data['error'] ) )
+            set_transient( 'ohdear_uptime', $data, DAY_IN_SECONDS );
+
+        return $data;
+    }
+
+    /**
+     * Get performance stats
+     *
+     * @return mixed
+     */
+    public function get_perf() {
+
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+
+        $perf = get_transient( 'ohdear_performance' );
+
+        if ( ! empty( $perf ) )
+            return $perf;
+
+        $site_id = $this->get_site_id();
+
+        if ( empty( $site_id ) )
+            return false;
+
+        // Last 24 hours
+        $args = array(
+            'filter' => array(
+                'start'     => date( 'YmdHis', mktime( null, null, null, date('m'), date('d')-1, date('Y') ) ),
+                'end'       => date( 'YmdHis' ),
+                'timeframe' => '1m'
+            )
+        );
+
+        $data = $this->request( 'sites/' . $site_id . '/performance-records', $args );
+
+        //debug_log( '$data:' );
+        //debug_log( $data );
+
+        if ( empty( $data['error'] ) )
+            set_transient( 'ohdear_performance', $data, DAY_IN_SECONDS );
+
+        return $data;
+    }
+
+    /**
+     * Get broken links
+     *
+     * @return mixed
+     */
+    public function get_broken() {
+
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+
+        $broken = get_transient( 'ohdear_broken' );
+
+        if ( ! empty( $broken ) )
+            return $broken;
+
+        $site_id = $this->get_site_id();
+
+        if ( empty( $site_id ) )
+            return false;
+
+        $data = $this->request( 'broken-links/' . $site_id );
+
+        //debug_log( '$data:' );
+        //debug_log( $data );
+
+        if ( empty( $data['error'] ) )
+            set_transient( 'ohdear_broken', $data, DAY_IN_SECONDS );
 
         return $data;
     }
@@ -130,20 +243,47 @@ class OhDear_API {
      * Fetch data from Oh Dear API
      *
      * @param string $url
+     * @param array $args
      *
      * @return array|mixed|null|object|string
      */
-    private function request( $url = '' ) {
+    private function request( $url = '', $args = array() ) {
 
         //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         if ( empty( $this->api_key ) )
             return null;
 
+        if ( is_array( $args ) && sizeof( $args ) > 0 ) {
+
+            $query_args = array();
+
+            foreach ( $args as $arg_key => $arg_value ) {
+
+                if ( ! empty ( $arg_value ) ) {
+
+                    // Comma separated values must be converted to arrays
+                    if ( is_string( $arg_value ) && strpos( $arg_value, ',' ) !== false ) {
+                        $arg_value = explode( ',', $arg_value );
+                    }
+
+                    // Add query args
+                    $query_args[ $arg_key ] = $arg_value;
+                }
+            }
+
+            if ( sizeof( $query_args ) > 0 ) {
+                // Extended "http_build_query" in order to add multiple args with the same key
+                $query = http_build_query( $query_args, null, '&' );
+                $query_string = preg_replace( '/%5B(?:[0-9]|[1-9][0-9]+)%5D=/', '=', $query );
+                $url .= '?' . $query_string;
+            }
+        }
+
         $response = wp_remote_get( $this->api_url . $url, array(
             'headers' => array(
                 'Authorization' => 'Bearer ' . $this->api_key,
-                'Content-Type' => 'application/json'
+                'Content-Type'  => 'application/json'
             ),
             //'body' => wp_json_encode( $args ),
             'timeout' => 15
@@ -177,4 +317,15 @@ class OhDear_API {
 
         return $result;
     }
+
+    /**
+     * @return bool|string
+     */
+    private function get_site_id() {
+
+        $data = $this->get_site_data();
+
+        return ( ! empty( $data['id'] ) ) ? (string) $data['id'] : false;
+    }
+
 }

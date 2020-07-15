@@ -42,37 +42,6 @@ function delete_settings() {
 }
 
 /**
- * Delete Oh Dear single setting
- *
- * @param $key
- */
-function delete_setting( $key ) {
-
-    //debug_log( __FUNCTION__ . ':' );
-
-    $settings = get_settings();
-
-    //debug_log( '$settings BEFORE:' );
-    //debug_log( $settings );
-
-    if ( empty( $settings ) )
-        return;
-
-    foreach ( $settings as $setting_key => $setting_value ) {
-
-        if ( $setting_key == $key ) {
-            unset( $settings[$setting_key] );
-            break;
-        }
-    }
-
-    //debug_log( '$settings AFTER:' );
-    //debug_log( $settings );
-
-    update_option( 'ohdear_settings', $settings );
-}
-
-/**
  * Delete Oh Dear cache
  */
 function delete_cache() {
