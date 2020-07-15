@@ -15,7 +15,7 @@
 
 /** Stats Section **/
 
-.stats__section {
+.dashboard__section {
   margin: 20px 0;
   padding: 15px 30px;
   background: white;
@@ -25,7 +25,7 @@
 
 /** Stats Title **/
 
-.stats__section .title-link {
+.dashboard__section .title-link {
   display: inline-block;
   margin-left: 10px;
   font-weight: normal;

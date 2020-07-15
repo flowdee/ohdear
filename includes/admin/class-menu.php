@@ -36,7 +36,7 @@ class OhDear_Admin_Menu {
 
         $tabs = $this->get_settings_tabs();
 
-        $active_tab = ( isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $tabs ) ) ? $_GET['tab'] : 'stats';
+        $active_tab = ( isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $tabs ) ) ? $_GET['tab'] : 'dashboard';
 
         ob_start();
         ?>
@@ -83,8 +83,8 @@ class OhDear_Admin_Menu {
     private function get_settings_tabs() {
 
         $tabs = array(
-            'stats'    => __( 'Stats', 'ohdear' ),
-            'settings' => __( 'Settings', 'ohdear' )
+            'dashboard' => __( 'Dashboard', 'ohdear' ),
+            'settings'  => __( 'Settings', 'ohdear' )
         );
 
         /**

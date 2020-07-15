@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /** Uptime Stats **/ ?>
 
-<div class="stats__section">
+<div class="dashboard__section">
 
     <h3><?php _e( 'Uptime Stats', 'ohdear' );
 
@@ -96,4 +96,4 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             </div>
         <?php endif; ?>
 
-</div><!-- /.stats__section -->
+</div><!-- /.dashboard__section -->

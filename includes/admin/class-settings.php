@@ -103,7 +103,8 @@ class OhDear_Settings {
             $saved = array();
 
         $settings = $this->get_registered_settings();
-        $tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'stats';
+
+        $tab = isset( $referrer['tab'] ) ? $referrer['tab'] : 'dashboard';
 
         $input = $input ? $input : array();
 
@@ -214,7 +215,7 @@ class OhDear_Settings {
     public function get_registered_settings() {
 
         return array(
-            'stats' => array(),
+            'dashboard' => array(),
 
             'settings' => array(
 

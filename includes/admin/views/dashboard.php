@@ -8,15 +8,17 @@ namespace OhDear;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$settings = get_settings();
+$settings = get_settings(); ?>
 
-if ( ! empty( $settings['api_status'] ) ) :
+<h2><?php esc_html_e( 'Oh Dear Monitoring', 'ohdear' ); ?></h2>
+
+<?php if ( ! empty( $settings['api_status'] ) ) :
 
     $data = ohdear()->api->get_site_data();
 
-    include_once 'stats-templates/uptime.php';
-    include_once 'stats-templates/performance.php';
-    include_once 'stats-templates/broken.php';
+    include_once 'dashboard-templates/uptime.php';
+    include_once 'dashboard-templates/performance.php';
+    include_once 'dashboard-templates/broken.php';
 
 else : ?>
 

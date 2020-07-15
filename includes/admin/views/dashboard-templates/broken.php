@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /** Broken Links **/ ?>
 
-<div class="stats__section">
+<div class="dashboard__section">
 
     <h3><?php _e( 'Broken Links', 'ohdear' );
 
@@ -81,4 +81,4 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             </div>
         <?php endif; ?>
 
-</div><!-- /.stats__section -->
+</div><!-- /.dashboard__section -->

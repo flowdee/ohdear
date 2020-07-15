@@ -6,8 +6,10 @@
 namespace OhDear;
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
-?>
+if ( ! defined( 'ABSPATH' ) ) exit; ?>
+
+<h2><?php esc_html_e( 'Oh Dear Settings', 'ohdear' ); ?></h2>
+
 <form method="post" action="options.php">
     <table class="form-table">
         <?php
