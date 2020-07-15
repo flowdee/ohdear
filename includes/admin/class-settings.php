@@ -19,7 +19,6 @@ class OhDear_Settings {
 
         $this->settings = get_settings();
 
-        // Set up.
         add_action( 'admin_init', array( $this, 'register_settings' ) );
     }
 
@@ -203,8 +202,6 @@ class OhDear_Settings {
                 remove_filter( 'ohdear_settings_sanitize_' . $type, $sanitize_callback, 10 );
             }
         }
-
-//        add_settings_error( 'ohdear-notices', '', __( 'Settings updated.', 'ohdear' ), 'updated' );
 
         return array_merge( $saved, $input );
     }

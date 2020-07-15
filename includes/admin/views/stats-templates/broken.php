@@ -1,5 +1,7 @@
 <?php
 
+namespace OhDear;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -9,9 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
     <h3><?php _e( 'Broken Links', 'ohdear' ); ?></h3>
 
-    <?php if ( ! empty( $broken['data'] ) ) :
+    <?php
+        $broken = ohdear()->api->get_broken();
 
-        $b_links = $broken['data']; ?>
+        if ( ! empty( $broken['data'] ) ) : ?>
 
         <p><?php echo __( 'Last time checked', 'ohdear' ) . ': ' . $data['checks'][2]['latest_run_ended_at']; ?></p>
 
@@ -33,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
             </thead>
 
             <tbody>
-            <?php foreach ( $b_links as $b_link ) : ?>
+            <?php foreach ( $broken['data'] as $b_link ) : ?>
                 <tr>
                     <td class="column-primary"> <?php echo $b_link['status_code']; ?></td>
 
@@ -48,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     <?php else : ?>
         <div class="notice notice-warning inline">
             <p>
-                <?php _e( 'No Broken Links was found for current site', 'ohdear' ); ?>
+                <?php _e( 'No Broken Links were found for current site', 'ohdear' ); ?>
             </p>
         </div>
     <?php endif; ?>

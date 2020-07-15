@@ -1,5 +1,7 @@
 <?php
 
+namespace OhDear;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -9,7 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
     <h3><?php _e( 'Performance Stats', 'ohdear' ); ?></h3>
 
-    <?php if ( ! empty( $perf['data'] ) ) :
+    <?php
+        $perf = ohdear()->api->get_perf();
+
+        if ( ! empty( $perf['data'] ) ) :
 
         $p_created  = array();
         $p_dns      = array();
@@ -164,7 +169,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     else : ?>
         <div class="notice notice-warning inline">
             <p>
-                <?php _e( 'No Performance stats was received for current site', 'ohdear' ); ?>
+                <?php _e( 'No Performance stats were received for current site', 'ohdear' ); ?>
             </p>
         </div>
     <?php endif; ?>

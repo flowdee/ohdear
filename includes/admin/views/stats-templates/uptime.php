@@ -1,5 +1,7 @@
 <?php
 
+namespace OhDear;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -9,15 +11,18 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
     <h3><?php _e( 'Uptime Stats', 'ohdear' ); ?></h3>
 
-    <?php if ( ! empty( $uptime ) ) :
+    <?php
+        $uptime = ohdear()->api->get_uptime();
+
+        if ( ! empty( $uptime ) ) :
 
         $u_datetime = array();
-        $u_percent = array();
+        $u_percent  = array();
 
         foreach ( $uptime as $key => $u ) {
 
-            $u_percent[] = $u['uptime_percentage'];
-            $u_datetime[]   = $u['datetime'];
+            $u_percent[]  = $u['uptime_percentage'];
+            $u_datetime[] = $u['datetime'];
         }
 
     if ( ! empty( $u_datetime ) ) :
@@ -84,7 +89,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
     else : ?>
         <div class="notice notice-warning inline">
             <p>
-                <?php _e( 'No Uptime stats was received for current site', 'ohdear' ); ?>
+                <?php _e( 'No Uptime stats were received for current site', 'ohdear' ); ?>
             </p>
         </div>
     <?php endif; ?>

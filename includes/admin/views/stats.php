@@ -13,9 +13,6 @@ $settings = get_settings();
 if ( ! empty( $settings['api_status'] ) ) :
 
     $data   = ohdear()->api->get_site_data();
-    $broken = ohdear()->api->get_broken();
-    $uptime = ohdear()->api->get_uptime();
-    $perf   = ohdear()->api->get_perf();
 
     include_once 'stats-templates/uptime.php';
     include_once 'stats-templates/performance.php';
