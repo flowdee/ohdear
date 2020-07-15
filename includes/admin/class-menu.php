@@ -49,9 +49,9 @@ class OhDear_Admin_Menu {
                     $tab_url = add_query_arg( array( 'tab' => $tab_id ) );
 
                     printf( '<a href="%1$s" alt="%2$s" class="%3$s">%2$s</a>',
-                        esc_url( $tab_url ),
-                        esc_attr( $tab_name ),
-                        ( $active_tab == $tab_id ) ? 'nav-tab nav-tab-active' : 'nav-tab'
+                            esc_url( $tab_url ),
+                            esc_attr( $tab_name ),
+                            ( $active_tab == $tab_id ) ? 'nav-tab nav-tab-active' : 'nav-tab'
                     );
                 }
                 ?>

@@ -1,0 +1,40 @@
+
+/** Api Status **/
+
+.api-status {
+  font-weight: bold;
+}
+
+.api-status.connected {
+  color: green;
+}
+
+.api-status.disconnected {
+  color: red;
+}
+
+/** Stats Section **/
+
+.stats__section {
+  margin: 20px 0;
+  padding: 15px 30px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/** Stats Title **/
+
+.stats__section .title-link {
+  display: inline-block;
+  margin-left: 10px;
+  font-weight: normal;
+  font-size: small;
+}
+
+/** Charts **/
+
+#uptime_chart,
+#perf_chart {
+  margin: 35px 10px;
+}

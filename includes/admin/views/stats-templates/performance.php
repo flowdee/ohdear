@@ -9,7 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <div class="stats__section">
 
-    <h3><?php _e( 'Performance Stats', 'ohdear' ); ?></h3>
+    <h3><?php _e( 'Performance Stats', 'ohdear' );
+
+            printf( '<a href="%1$s" title="%2$s" target="_blank" class="title-link">%2$s</a>',
+                    'https://ohdear.app/sites/' . $data['id'] . '/checks/' . $data['checks'][1]['id'] . '/report/',
+                    esc_html__( 'Open Performance Stats Dashboard', 'ohdear' )
+            );
+        ?>
+    </h3>
 
     <?php
         $perf = ohdear()->api->get_perf();
@@ -41,12 +48,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
                 <div id="perf_chart"></div>
 
-                <style>
-                    #perf_chart {
-                        margin: 35px 10px;
-                    }
-                </style>
-
                 <script>
                   var
                     options = {
@@ -57,6 +58,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                       dataLabels: {
                         enabled: false
                       },
+                      fill: {
+                        colors: ['#ffecf0', '#e9f7f7', '#f3ecff', '#cbe9ff', '#fff9ea']
+                      },
+                      colors: ['#ffc6d2', '#b0e3e3', '#dccdfa', '#a9d8f9', '#ffe9b5'],
                       stroke: {
                         curve: 'smooth',
                         width: 2

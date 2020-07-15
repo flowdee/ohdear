@@ -324,10 +324,11 @@ class OhDear_Settings {
         // bool
         $api_status = ( isset( $this->settings['api_status'] ) ) ? $this->settings['api_status'] : false;
 
-        $color = ( $api_status ) ? 'green' : 'red';
+        $class = ( $api_status ) ? 'connected' : 'disconnected';
+
         $status = __( ( $api_status ) ? 'Connected' : 'Disconnected', 'ohdear' );
 
-        return '<span style="font-weight: bold; color: ' . $color . '">' . $status . '</span>';
+        return '<span class="api-status ' . $class . '">' . $status . '</span>';
     }
 
     /**

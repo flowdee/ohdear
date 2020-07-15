@@ -44,6 +44,7 @@ function admin_scripts() {
 	if ( ! is_admin_page() )
 	    return;
 
-    wp_enqueue_script( 'ohdear-apexcharts', OHDEAR_PLUGIN_URL . 'includes/third-party/apexcharts.min.js', array(), OHDEAR_VERSION );
+    wp_enqueue_script( 'ohdear-apexcharts', OHDEAR_PLUGIN_URL . 'assets/js/apexcharts.min.js', array(), OHDEAR_VERSION );
+    wp_enqueue_style( 'ohdear-admin-css', OHDEAR_PLUGIN_URL . 'assets/css/admin.css', array(), OHDEAR_VERSION );
 }
 add_action( 'admin_enqueue_scripts', '\OhDear\admin_scripts' );

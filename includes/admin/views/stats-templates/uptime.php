@@ -9,7 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 <div class="stats__section">
 
-    <h3><?php _e( 'Uptime Stats', 'ohdear' ); ?></h3>
+    <h3><?php _e( 'Uptime Stats', 'ohdear' );
+
+            printf( '<a href="%1$s" title="%2$s" target="_blank" class="title-link">%2$s</a>',
+                    'https://ohdear.app/sites/' . $data['id'] . '/checks/' . $data['checks'][0]['id'] . '/report/',
+                    esc_html__( 'Open Uptime Stats Dashboard', 'ohdear' )
+            );
+        ?>
+    </h3>
 
     <?php
         $uptime = ohdear()->api->get_uptime();
@@ -33,12 +40,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
                 <div id="uptime_chart"></div>
 
-                <style>
-                    #uptime_chart {
-                        margin: 35px 10px;
-                    }
-                </style>
-
                 <script>
                   var
                     options = {
@@ -52,6 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                           }
                         }
                       },
+                      colors: [ '#c6f6d5' ],
                       series: [{
                         name: "Uptime Stats",
                         data: [
