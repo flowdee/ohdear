@@ -159,7 +159,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                       },
                       yaxis: {
                         labels: {
-                          formatter: (val) => { return 1000 * val.toFixed(3) + 'ms' }
+                          formatter: (val) => { return parseInt( val * 1000 ) + 'ms' }
                         }
                       }
                     },
