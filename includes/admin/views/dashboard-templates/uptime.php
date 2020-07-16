@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                           }
                         }
                       },
-                      colors: [ '#c6f6d5' ],
+                      colors: [ '#e32929' ],
                       series: [{
                         name: "Uptime Stats",
                         data: [
