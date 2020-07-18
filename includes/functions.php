@@ -44,10 +44,18 @@ function delete_settings() {
 /**
  * Delete Oh Dear cache
  */
-function delete_cache() {
+function delete_cache( $name = '' ) {
+
+debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+
     global $wpdb;
 
-    $sql = 'DELETE FROM ' . $wpdb->options . ' WHERE option_name LIKE "%_transient_ohdear_%"';
+    if ( ! empty( $name ) ) {
+
+        $sql = 'DELETE FROM ' . $wpdb->options . ' WHERE option_name LIKE "%_transient_' . $name . '%"';
+    } else {
+        $sql = 'DELETE FROM ' . $wpdb->options . ' WHERE option_name LIKE "%_transient_ohdear_%"';
+    }
 
     $wpdb->query( $sql );
 }
@@ -67,3 +75,6 @@ function debug_log( $message ) {
         }
     }
 }
+
+//delete_settings();
+//delete_cache();

@@ -84,13 +84,13 @@ class OhDear_Settings {
      */
     function sanitize_settings( $input = array() ) {
 
-        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
-        //debug_log( ' $_POST:' );
-        //debug_log( $_POST );
-        //
-        //debug_log( ' $input:' );
-        //debug_log( $input );
+//debug_log( ' $_POST:' );
+//debug_log( $_POST );
+
+//debug_log( ' $input:' );
+//debug_log( $input );
 
         if ( empty( $_POST['_wp_http_referer'] ) )
             return $input;
@@ -143,9 +143,38 @@ class OhDear_Settings {
 
         $input['api_status'] = $api_status;
 
-        // Ensure a value is always passed for every checkbox/select (dropdown) option
-        if ( ! empty( $settings[ $tab ] ) ) {
-            foreach ( $settings[ $tab ] as $key => $setting ) {
+        /**
+         * Handle Website Selector dropdown default value
+         */
+        if ( ! empty( $api_status ) ) {
+
+//debug_log( ' $input[\'site_selector\']:' );
+//debug_log( $input['site_selector'] );
+
+            if ( empty( $input['site_selector'] ) ) {
+
+                $input['site_selector'] = ( ! empty( $this->settings[ 'site_selector' ] ) ) ? $this->settings[ 'site_selector' ] : ohdear()->api->get_site_id();
+
+            } else {
+                $site_selector     = ( isset( $this->settings['site_selector'] ) ) ? $this->settings['site_selector'] : '';
+                $site_selector_new = esc_html( $input['site_selector'] );
+
+                if ( $site_selector_new != $site_selector ) {
+
+                    // Delete ohdear transients
+                    delete_cache( 'ohdear_current_site' );
+
+                    $input['site_selector'] = $site_selector_new;
+
+                    // Cache current site data into transient
+                   // ohdear()->api->get_site_data();
+                }
+            }
+        }
+
+        // Ensure a value is always passed for every checkbox/select (dropdown) option on the 'settings' tab
+        if ( ! empty( $api_status ) && ! empty( $settings[ $tab ] ) && 'settings' == $settings[ $tab ] ) {
+            foreach ( $settings['settings'] as $key => $setting ) {
 
                 // Multicheck / Multiselect
                 if ( isset( $settings[ $tab ][ $key ][ 'type' ] )
@@ -158,49 +187,50 @@ class OhDear_Settings {
             }
         }
 
-        // Loop through each setting being saved and pass it through a sanitization filter
-        foreach ( $input as $key => $value ) {
+        if ( ! empty( $api_status ) ) {
 
-            // Get the setting type (checkbox, select, etc)
-            $type              = isset( $settings[ $tab ][ $key ][ 'type' ] ) ? $settings[ $tab ][ $key ][ 'type' ] : false;
-            $sanitize_callback = isset( $settings[ $tab ][ $key ][ 'sanitize_callback' ] ) ? $settings[ $tab ][ $key ][ 'sanitize_callback' ] : false;
-            $input[ $key ]     = $value;
+            // Loop through each setting being saved and pass it through a sanitization filter
+            foreach ( $input as $key => $value ) {
 
-            if ( $type ) {
+                // Get the setting type (checkbox, select, etc)
+                $type              = isset( $settings[ $tab ][ $key ][ 'type' ] ) ? $settings[ $tab ][ $key ][ 'type' ] : false;
+                $sanitize_callback = isset( $settings[ $tab ][ $key ][ 'sanitize_callback' ] ) ? $settings[ $tab ][ $key ][ 'sanitize_callback' ] : false;
+                $input[ $key ]     = $value;
 
-                if ( $sanitize_callback && is_callable( $sanitize_callback ) )
-                    add_filter( 'ohdear_settings_sanitize_' . $type, $sanitize_callback, 10, 2 );
+                if ( $type ) {
+
+                    if ( $sanitize_callback && is_callable( $sanitize_callback ) )
+                        add_filter( 'ohdear_settings_sanitize_' . $type, $sanitize_callback, 10, 2 );
+
+                    /**
+                     * Filters the sanitized value for a setting of a given type.
+                     *
+                     * This filter is appended with the setting type (checkbox, select, etc), for example:
+                     *
+                     *     `ohdear_settings_sanitize_checkbox`
+                     *     `ohdear_settings_sanitize_select`
+                     *
+                     * @param array  $value The input array and settings key defined within.
+                     * @param string $key   The settings key.
+                     */
+                    $input[ $key ] = apply_filters( 'ohdear_settings_sanitize_' . $type, $input[ $key ], $key );
+                }
+
+                // Admins always have access
+                if ( $key == 'user_roles_access' )
+                    $input[ $key ][] = 'administrator';
 
                 /**
-                 * Filters the sanitized value for a setting of a given type.
+                 * General setting sanitization filter
                  *
-                 * This filter is appended with the setting type (checkbox, select, etc), for example:
-                 *
-                 *     `ohdear_settings_sanitize_checkbox`
-                 *     `ohdear_settings_sanitize_select`
-                 *
-                 * @param array  $value The input array and settings key defined within.
-                 * @param string $key   The settings key.
+                 * @param array  $input[ $key ] The input array and settings key defined within.
+                 * @param string $key           The settings key.
                  */
-                $input[ $key ] = apply_filters( 'ohdear_settings_sanitize_' . $type, $input[ $key ], $key );
-            }
+                $input[ $key ] = apply_filters( 'ohdear_settings_sanitize', $input[ $key ], $key );
 
-            // Admins always have access
-            if ( $key == 'user_roles_access' )
-                $input[ $key ][] = 'administrator';
-
-            /**
-             * General setting sanitization filter
-             *
-             * @param array  $input[ $key ] The input array and settings key defined within.
-             * @param string $key           The settings key.
-             */
-            $input[ $key ] = apply_filters( 'ohdear_settings_sanitize', $input[ $key ], $key );
-
-            // Now remove the filter
-            if( $sanitize_callback && is_callable( $sanitize_callback ) ) {
-
-                remove_filter( 'ohdear_settings_sanitize_' . $type, $sanitize_callback, 10 );
+                // Now remove the filter
+                if( $sanitize_callback && is_callable( $sanitize_callback ) )
+                    remove_filter( 'ohdear_settings_sanitize_' . $type, $sanitize_callback, 10 );
             }
         }
 
@@ -231,8 +261,14 @@ class OhDear_Settings {
                     'desc' => ''
                 ),
 
+                'site_selector' => array(
+                    'name' => __( 'Website Selector', 'ohdear' ),
+                    'type' => 'select',
+                    'options' => $this->sites_render()
+                ),
+
                 'user_roles_access' => array(
-                    'name' => __( 'Which user roles can access the Oh Dear analytics?', 'ohdear' ),
+                    'name' => __( 'Which user roles can access the Oh Dear monitoring?', 'ohdear' ),
                     'type' => 'multiselect',
                     'desc' => ''
                 )
@@ -250,20 +286,84 @@ class OhDear_Settings {
      */
     public function multiselect_callback( $args ) {
 
-        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
-        //debug_log( $this->settings[ $args['id'] ] );
+//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         echo '<label for="ohdear_settings[' . $args['id'] . '][]">';
         echo '<select multiple name="ohdear_settings[' . $args['id'] . '][]" id="ohdear_settings[' . $args['id'] . '][]">';
 
         if ( isset( $this->settings[ $args['id'] ] ) && is_array( $this->settings[ $args['id'] ] ) ) {
+
             $selected = $this->settings[ $args['id'] ];
         } else {
             $selected = array();
         }
 
-        $this->get_user_roles( $selected );
+        if ( 'user_roles_access' == $args['id'] ) {
+
+            $this->user_roles_render( $selected );
+        }
+
         echo '</select>';
+    }
+
+    /**
+     * Select Callback
+     *
+     * Renders select fields.
+     *
+     * @param array $args Arguments passed by the setting
+     * @return void
+     */
+    function select_callback( $args ) {
+
+//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+
+        $value = '';
+
+        if ( empty( $this->settings[ 'api_status' ] ) ) {
+
+            $value = '';
+
+        } elseif ( ! empty( $this->settings[ $args['id'] ] ) ) {
+
+            $value = $this->settings[ $args['id'] ];
+
+        } elseif ( 'site_selector' == $args['id'] ) {
+
+//debug_log( '$this->settings[ $args[\'id\'] ]:' );
+//debug_log( $this->settings[ $args['id'] ] );
+
+
+            $site_data = ohdear()->api->get_site_data();
+
+//debug_log( '$site_data[\'sort_url\']:' );
+//debug_log( $site_data['sort_url'] );
+
+
+            if ( ! empty( $site_data['sort_url'] ) ) {
+
+                // @Todo: 'kryptonitewp.com', 'mhthemes.com' are for debugging here
+
+                //if ( strpos( home_url(), $site_data['sort_url'] ) !== false ) {
+                //if ( strpos( 'kryptonitewp.com', $site_data['sort_url'] ) !== false ) {
+                if ( strpos( 'mhthemes.com', $site_data['sort_url'] ) !== false ) {
+
+                    $value = $site_data['sort_url'];
+                }
+            }
+        }
+
+        $html = '<select id="ohdear_settings[' . $args['id'] . ']" name="ohdear_settings[' . $args['id'] . ']"/>';
+
+        foreach ( $args['options'] as $option => $name ) :
+            $selected = selected( $option, $value, false );
+            $html .= '<option value="' . $option . '" ' . $selected . '>' . $name . '</option>';
+        endforeach;
+
+        $html .= '</select>';
+        $html .= '<p class="description"> '  . $args['desc'] . '</p>';
+
+        echo $html;
     }
 
     /**
@@ -337,7 +437,7 @@ class OhDear_Settings {
      *
      * @param array $selected
      */
-    private function get_user_roles( $selected = array() ) {
+    private function user_roles_render( $selected = array() ) {
 
         foreach ( get_editable_roles() as $role => $details ) {
 
@@ -349,5 +449,40 @@ class OhDear_Settings {
             <?php PHP_EOL; ?>
             <?php
         }
+    }
+
+    /**
+     * Get all sites
+     *
+     * @return string[]
+     */
+    public function sites_render() {
+
+//( __CLASS__ . ' >>> ' . __FUNCTION__ );
+
+        $options = array(
+            '' => '-- ' . __( 'No sites found', 'ohdear' ) . ' --'
+        );
+
+        //if ( ! empty( $this->settings['api_status'] ) ) {
+
+            // @Todo: Fix '401 Unauthorized' status error
+
+            $sites = ohdear()->api->get_sites();
+
+//debug_log( '$sites:' );
+//debug_log( $sites );
+
+            if ( ! empty( $sites ) && is_array( $sites ) && ! empty( $sites['data'] ) && is_array( $sites['data'] ) ) {
+
+                $options[''] = '-- ' . __( 'Choose a site', 'ohdear' ) . ' --';
+
+                foreach ( $sites['data'] as $key => $site_data ) {
+                    $options[ $site_data['id'] ] = $site_data['sort_url'];
+                }
+            }
+        //}
+
+        return $options;
     }
 }

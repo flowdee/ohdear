@@ -48,7 +48,7 @@ class OhDear_Admin_Menu {
                 foreach ( $tabs as $tab_id => $tab_name ) {
                     $tab_url = add_query_arg( array( 'tab' => $tab_id ) );
 
-                    printf( '<a href="%1$s" alt="%2$s" class="%3$s">%2$s</a>',
+                    printf( '<a href="%1$s" title="%2$s" class="%3$s">%2$s</a>',
                             esc_url( $tab_url ),
                             esc_attr( $tab_name ),
                             ( $active_tab == $tab_id ) ? 'nav-tab nav-tab-active' : 'nav-tab'
