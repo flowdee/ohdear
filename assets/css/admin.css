@@ -5,6 +5,12 @@
   font-weight: bold;
 }
 
+/** Multiselect **/
+
+select[name="ohdear_settings[user_roles_access][]"] {
+  min-height: 150px;
+}
+
 .api-status.connected {
   color: green;
 }

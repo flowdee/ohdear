@@ -164,10 +164,10 @@ final class OhDear {
 
         if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
-            require_once __DIR__ . '/includes/admin/plugins.php';
             require_once __DIR__ . '/includes/admin/scripts.php';
             require_once __DIR__ . '/includes/admin/class-api.php';
             require_once __DIR__ . '/includes/admin/class-menu.php';
+            require_once __DIR__ . '/includes/admin/plugins.php';
             require_once __DIR__ . '/includes/admin/class-settings.php';
         }
     }
@@ -181,8 +181,9 @@ final class OhDear {
     public function setup_objects() {
 
         if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-            self::$instance->settings = new OhDear_Settings();
+
             self::$instance->api = new OhDear_API();
+            self::$instance->settings = new OhDear_Settings();
         }
     }
 

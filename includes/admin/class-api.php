@@ -46,7 +46,7 @@ class OhDear_API {
      */
     public function verify_api_credentials( $api_key ) {
 
-//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $this->api_key = $api_key;
 
@@ -67,7 +67,7 @@ class OhDear_API {
      */
     public function get_sites() {
 
-//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $data = get_transient( 'ohdear_sites' );
 
@@ -77,8 +77,8 @@ class OhDear_API {
 
             if ( ! empty( $data['error'] ) ) {
 
-//debug_log( 'API REQUEST ERROR:' );
-//debug_log( $data['error'] );
+                //debug_log( 'API REQUEST ERROR:' );
+                //debug_log( $data['error'] );
 
                 return false;
             }
@@ -86,65 +86,8 @@ class OhDear_API {
             set_transient( 'ohdear_sites', $data, DAY_IN_SECONDS );
         }
 
-//debug_log( '$data:' );
-//debug_log( $data );
-
-        return $data;
-    }
-
-    /**
-     * Get current site data
-     *
-     * @return mixed
-     */
-    public function get_site_data() {
-
-debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
-
-        $data = get_transient( 'ohdear_current_site' );
-
-        if ( is_array( $data ) && ! empty( $data ) && ! empty( $this->settings[ 'site_selector' ] ) && $this->settings[ 'site_selector' ] == $data['id'] )
-            return $data;
-
-        $sites = $this->get_sites();
-
-        if ( ! is_array( $sites ) || empty( $sites['data'] ) || ! is_array( $sites['data'] ) )
-            return false;
-
-        if ( ! empty( $this->settings[ 'site_selector' ] ) ) {
-
-            foreach ( $sites['data'] as $key => $site_data ) {
-
-                if ( $site_data['id'] == $this->settings[ 'site_selector' ] ) {
-
-                    $data = $site_data;
-                    break;
-                }
-            }
-
-        } else {
-
-            foreach ( $sites['data'] as $key => $site_data ) {
-
-                // @Todo: 'kryptonitewp.com', 'mhthemes.com' are for debugging here
-
-                //if ( strpos( home_url(), $site_data['sort_url'] ) !== false ) {
-                //if ( strpos( 'kryptonitewp.com', $site_data['sort_url'] ) !== false ) {
-                if ( strpos( 'mhthemes.com', $site_data['sort_url'] ) !== false ) {
-
-                    $data = $site_data;
-                    break;
-                }
-            }
-        }
-
-        if ( ! is_array( $data ) || empty( $data['id'] ) )
-            return false;
-
-//debug_log( '$data:' );
-//debug_log( $data );
-
-        set_transient( 'ohdear_current_site', $data, DAY_IN_SECONDS );
+        //debug_log( '$data:' );
+        //debug_log( $data );
 
         return $data;
     }
@@ -156,14 +99,14 @@ debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
      */
     public function get_uptime() {
 
-//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $uptime = get_transient( 'ohdear_uptime' );
 
         if ( ! empty( $uptime ) )
             return $uptime;
 
-        $site_id = $this->get_site_id();
+        $site_id = get_site_id();
 
         if ( empty( $site_id ) )
             return false;
@@ -179,8 +122,8 @@ debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $data = $this->request( 'sites/' . $site_id . '/uptime', $args );
 
-//debug_log( '$data:' );
-//debug_log( $data );
+        //debug_log( '$data:' );
+        //debug_log( $data );
 
         if ( empty( $data['error'] ) )
             set_transient( 'ohdear_uptime', $data, DAY_IN_SECONDS );
@@ -195,14 +138,14 @@ debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
      */
     public function get_perf() {
 
-//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $perf = get_transient( 'ohdear_performance' );
 
         if ( ! empty( $perf ) )
             return $perf;
 
-        $site_id = $this->get_site_id();
+        $site_id = get_site_id();
 
         if ( empty( $site_id ) )
             return false;
@@ -218,8 +161,8 @@ debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $data = $this->request( 'sites/' . $site_id . '/performance-records', $args );
 
-//debug_log( '$data:' );
-//debug_log( $data );
+        //debug_log( '$data:' );
+        //debug_log( $data );
 
         if ( empty( $data['error'] ) )
             set_transient( 'ohdear_performance', $data, DAY_IN_SECONDS );
@@ -234,22 +177,22 @@ debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
      */
     public function get_broken() {
 
-//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $broken = get_transient( 'ohdear_broken' );
 
         if ( ! empty( $broken ) )
             return $broken;
 
-        $site_id = $this->get_site_id();
+        $site_id = get_site_id();
 
         if ( empty( $site_id ) )
             return false;
 
         $data = $this->request( 'broken-links/' . $site_id );
 
-//debug_log( '$data:' );
-//debug_log( $data );
+        //debug_log( '$data:' );
+        //debug_log( $data );
 
         if ( empty( $data['error'] ) )
             set_transient( 'ohdear_broken', $data, DAY_IN_SECONDS );
@@ -267,7 +210,10 @@ debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
      */
     private function request( $url = '', $args = array() ) {
 
-//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+        //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
+
+        //debug_log( '$url:' );
+        //debug_log( $url );
 
         if ( empty( $this->api_key ) )
             return false;
@@ -307,8 +253,8 @@ debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
             'timeout' => 15
         ));
 
-//debug_log( '$response:' );
-//debug_log( $response );
+        //debug_log( '$response:' );
+        //debug_log( $response );
 
         // Check for error
         if ( is_wp_error( $response ) ) {
@@ -327,28 +273,13 @@ debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $result = json_decode( $result, true );
 
-//debug_log( '$result:' );
-//debug_log( $result );
+        //debug_log( '$result:' );
+        //debug_log( $result );
 
         if ( empty( $result ) )
             debug_log( 'Can not decode response JSON to assoc array' );
 
         return $result;
-    }
-
-    /**
-     * @return bool|string
-     */
-    public function get_site_id() {
-
-//debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
-
-        $data = $this->get_site_data();
-
-//debug_log( '$data:' );
-//debug_log( $data );
-
-        return ( ! empty( $data['id'] ) ) ? (string) $data['id'] : false;
     }
 
 }

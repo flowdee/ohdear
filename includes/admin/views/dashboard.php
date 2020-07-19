@@ -14,7 +14,7 @@ $settings = get_settings(); ?>
 
 <?php if ( ! empty( $settings['api_status'] ) && ! empty( $settings['site_selector'] ) ) :
 
-    $data = ohdear()->api->get_site_data(); ?>
+    $data = get_site_data(); ?>
 
     <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
 
