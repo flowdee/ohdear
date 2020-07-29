@@ -257,20 +257,23 @@ class OhDear_Settings {
 
                 'api_key' => array(
                     'name' => __( 'API Token', 'ohdear' ),
-                    'type' => 'text',
-                    'desc' => ''
+                    'type' => 'password',
+                    'desc' => sprintf( wp_kses( __( 'Enter your OhDear API token, found on your <a href="%s" target="_blank">OhDear api settings page</a>', 'ohdear' ),
+                                                array( 'a' => array( 'href' => array(), 'target' => array() ) )
+                                       ), esc_url( 'https://ohdear.app/user-settings/api' ) ),
                 ),
 
                 'site_selector' => array(
-                    'name' => __( 'Website Selector', 'ohdear' ),
+                    'name' => __( 'Website', 'ohdear' ),
                     'type' => 'select',
+                    'desc' => __( 'Select the website from which the data will be taken from', 'ohdear' ),
                     'options' => $this->sites_render()
                 ),
 
                 'user_roles_access' => array(
-                    'name' => __( 'Which user roles can access the Oh Dear monitoring?', 'ohdear' ),
+                    'name' => __( 'Grant Access', 'ohdear' ),
                     'type' => 'multiselect',
-                    'desc' => ''
+                    'desc' => __( 'Select which user roles can access the Oh Dear monitoring (administrators have access by default)', 'ohdear' )
                 )
             )
         );
@@ -298,12 +301,11 @@ class OhDear_Settings {
             $selected = array();
         }
 
-        if ( 'user_roles_access' == $args['id'] ) {
-
+        if ( 'user_roles_access' == $args['id'] )
             $this->user_roles_render( $selected );
-        }
 
         echo '</select>';
+        echo '<p class="description"> '  . $args['desc'] . '</p>';
     }
 
     /**
@@ -386,6 +388,29 @@ class OhDear_Settings {
     }
 
     /**
+     * Password Callback
+     *
+     * Renders password fields.
+     *
+     * @param array $args Arguments passed by the setting
+     * @return void
+     */
+    public function password_callback( $args ) {
+
+        if ( isset( $this->settings[ $args['id'] ] ) && ! empty( $this->settings[ $args['id'] ] ) ) {
+            $value = $this->settings[ $args['id'] ];
+        } else {
+            $value = isset( $args['std'] ) ? $args['std'] : '';
+        }
+
+        $size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+        $html = '<input type="password" class="' . $size . '-text" id="ohdear_settings[' . $args['id'] . ']" name="ohdear_settings[' . $args['id'] . ']" value="' . esc_attr( $value ) . '"/>';
+        $html .= '<p class="description"> '  . $args['desc'] . '</p>';
+
+        echo $html;
+    }
+
+    /**
      * Missing Callback
      *
      * If a function is missing for settings callbacks alert the user.
@@ -393,7 +418,7 @@ class OhDear_Settings {
      * @param array $args Arguments passed by the setting
      * @return void
      */
-    public function missing_callback($args) {
+    public function missing_callback( $args ) {
         printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'ohdear' ), $args['id'] );
     }
 
@@ -455,7 +480,7 @@ class OhDear_Settings {
 
             if ( ! empty( $sites ) && is_array( $sites ) && ! empty( $sites['data'] ) && is_array( $sites['data'] ) ) {
 
-                $options[''] = '-- ' . __( 'Choose a site', 'ohdear' ) . ' --';
+                $options[''] = '-- ' . __( 'Please select a site', 'ohdear' ) . ' --';
 
                 foreach ( $sites['data'] as $key => $site_data ) {
                     $options[ $site_data['id'] ] = $site_data['sort_url'];
