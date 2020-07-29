@@ -470,20 +470,33 @@ class OhDear_Settings {
 
         if ( ! empty( $this->settings['api_status'] ) && $this->is_settings_page() ) {
 
-            $sites = ohdear()->api->get_sites();
+            $s_list = ohdear()->api->get_sites();
 
             //debug_log( '$sites:' );
             //debug_log( $sites );
 
-            if ( ! empty( $sites ) && is_array( $sites ) && ! empty( $sites['data'] ) && is_array( $sites['data'] ) ) {
+            if ( ! empty( $s_list ) && is_array( $s_list ) && ! empty( $s_list['data'] ) && is_array( $s_list['data'] ) ) {
 
                 $options[''] = '-- ' . __( 'Please select a site', 'ohdear' ) . ' --';
 
-                foreach ( $sites['data'] as $key => $site_data ) {
-                    $options[ $site_data['id'] ] = $site_data['sort_url'];
+                $sites = array();
+
+                foreach ( $s_list['data'] as $key => $s_data ) {
+
+                    $sites[ $s_data['id'] ] = $s_data['sort_url'];
+                }
+
+                asort( $sites );
+
+                foreach ( $sites as $id => $val ) {
+
+                    $options[ $id ] = $val;
                 }
             }
         }
+
+        //debug_log( '$options:' );
+        //debug_log( $options );
 
         return $options;
     }
