@@ -6,12 +6,12 @@ namespace OhDear;
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Determines whether the current admin page is Oh Dear Analytics.
+ * Determines whether the current admin page is Oh Dear.
  *
  * Only works after the `wp_loaded` hook, & most effective
  * starting on `admin_menu` hook.
  *
- * @return bool True if Oh Dear Analytics admin page.
+ * @return bool True if Oh Dear admin page.
  */
 function is_admin_page() {
 
@@ -26,7 +26,7 @@ function is_admin_page() {
 	    $ret = in_array( $page, $pages );
 
 	/**
-	 * Filters whether the current page is Oh Dear Analytics admin page.
+	 * Filters whether the current page is Oh Dear admin page.
 	 *
 	 * @param bool $ret Whether the current page is either a given admin page
 	 *                  or any whitelisted admin page.

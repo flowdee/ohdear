@@ -26,7 +26,7 @@ class OhDear_Admin_Menu {
 
         // @Todo: capability 'manage_options' displays for "admins" only. Expand for other user roles
 
-        add_submenu_page( 'index.php', esc_html__( 'Oh Dear Analytics', 'ohdear' ), esc_html__( 'Oh Dear Analytics', 'ohdear' ), 'manage_options', OHDEAR_PAGE, array( $this, 'view_template' ) );
+        add_submenu_page( 'index.php', esc_html__( 'Oh Dear', 'ohdear' ), esc_html__( 'Oh Dear', 'ohdear' ), 'manage_options', OHDEAR_PAGE, array( $this, 'view_template' ) );
     }
 
     /**

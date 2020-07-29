@@ -5,15 +5,15 @@ namespace OhDear;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/** Performance Stats **/ ?>
+/** Performance **/ ?>
 
 <div class="dashboard__section">
 
-    <h3><?php _e( 'Performance Stats', 'ohdear' );
+    <h3><?php _e( 'Performance', 'ohdear' );
 
             printf( '<a href="%1$s" title="%2$s" target="_blank" class="title-link">%2$s</a>',
                     'https://ohdear.app/sites/' . $data['id'] . '/checks/' . $data['checks'][1]['id'] . '/report/',
-                    esc_html__( 'Open Performance Stats Dashboard', 'ohdear' )
+                    esc_html__( 'Open on Oh Dear', 'ohdear' )
             );
         ?>
     </h3>
@@ -174,7 +174,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         else : ?>
             <div class="notice notice-warning inline">
                 <p>
-                    <?php _e( 'No Performance stats were received for current site', 'ohdear' ); ?>
+                    <?php _e( 'No Performance stats were received for the current site', 'ohdear' ); ?>
                 </p>
             </div>
         <?php endif;

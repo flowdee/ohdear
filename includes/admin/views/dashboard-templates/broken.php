@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
             printf( '<a href="%1$s" title="%2$s" target="_blank" class="title-link">%2$s</a>',
                     'https://ohdear.app/sites/' . $data['id'] . '/checks/' . $data['checks'][2]['id'] . '/report/',
-                    esc_html__( 'Open Broken Links Dashboard', 'ohdear' )
+                    esc_html__( 'Open on Oh Dear', 'ohdear' )
             );
         ?>
     </h3>
@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         <?php else : ?>
             <div class="notice notice-warning inline">
                 <p>
-                    <?php _e( 'No Broken Links were found for current site', 'ohdear' ); ?>
+                    <?php _e( 'No Broken Links were found for the current site', 'ohdear' ); ?>
                 </p>
             </div>
         <?php endif; ?>

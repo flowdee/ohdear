@@ -5,15 +5,15 @@ namespace OhDear;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/** Uptime Stats **/ ?>
+/** Uptime **/ ?>
 
 <div class="dashboard__section">
 
-    <h3><?php _e( 'Uptime Stats', 'ohdear' );
+    <h3><?php _e( 'Uptime', 'ohdear' );
 
             printf( '<a href="%1$s" title="%2$s" target="_blank" class="title-link">%2$s</a>',
                     'https://ohdear.app/sites/' . $data['id'] . '/checks/' . $data['checks'][0]['id'] . '/report/',
-                    esc_html__( 'Open Uptime Stats Dashboard', 'ohdear' )
+                    esc_html__( 'Open on Oh Dear', 'ohdear' )
             );
         ?>
     </h3>
@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
                       },
                       colors: [ '#e32929' ],
                       series: [{
-                        name: "Uptime Stats",
+                        name: "Uptime",
                         data: [
                             <?php
                             for ( $i = 0; $i < $u_count; $i++ ) {
@@ -91,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
         else : ?>
             <div class="notice notice-warning inline">
                 <p>
-                    <?php _e( 'No Uptime stats were received for current site', 'ohdear' ); ?>
+                    <?php _e( 'No Uptime stats were received for the current site', 'ohdear' ); ?>
                 </p>
             </div>
         <?php endif; ?>

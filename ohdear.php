@@ -148,7 +148,7 @@ final class OhDear {
 
         // Plugin Page Slug
         if ( ! defined( 'OHDEAR_PAGE' ) ) {
-            define( 'OHDEAR_PAGE', 'ohdear-analytics' );
+            define( 'OHDEAR_PAGE', 'ohdear' );
         }
     }
 
