@@ -85,11 +85,13 @@ class OhDear_Settings {
     }
 
     /**
-     * Retrieve the array of plugin settings
+     * Sanitize settings
+     *
+     * @param array $input
      *
      * @return array
      */
-    function sanitize_settings( $input = array() ) {
+    public function sanitize_settings( $input = array() ) {
 
         //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
@@ -137,7 +139,7 @@ class OhDear_Settings {
                 // bool
                 $api_status = ( is_array( $result ) && empty( $result['error'] ) );
 
-                // Sanitized API Key input value
+                // Sanitized value
                 $input['api_key'] = $api_key_new;
             }
 
@@ -156,23 +158,18 @@ class OhDear_Settings {
         /**
          * Handle Website Selector dropdown default value
          */
-        if ( empty( $input['site_selector'] ) ) {
-
-            $input['site_selector'] = ( ! empty( $this->settings[ 'site_selector' ] ) ) ? $this->settings[ 'site_selector' ] : get_site_id();
-
-            //debug_log( $input['site_selector'] );
-
-        } else {
-            $site_selector     = ( isset( $this->settings['site_selector'] ) ) ? $this->settings['site_selector'] : '';
             $site_selector_new = esc_html( $input['site_selector'] );
+            $site_selector     = ( isset( $this->settings['site_selector'] ) ) ? $this->settings['site_selector'] : '';
 
             if ( $site_selector_new != $site_selector ) {
 
-                // Delete ohdear transients
-                delete_cache();
+            delete_transient( 'ohdear_current_site' );
 
-                $input['site_selector'] = $site_selector_new;
-            }
+            $input['site_selector'] = get_site_id( $site_selector_new );
+
+        } elseif ( empty( $input['site_selector'] ) ) {
+
+            $input['site_selector'] = get_site_id();
         }
 
         // Ensure a value is always passed for every checkbox/select (dropdown) option on the 'settings' tab
@@ -316,25 +313,25 @@ class OhDear_Settings {
      * @param array $args Arguments passed by the setting
      * @return void
      */
-    function select_callback( $args ) {
+    public function select_callback( $args ) {
 
         //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
         $selected = '';
 
-        if ( empty( $this->settings[ 'api_status' ] ) ) {
-
-            $selected = '';
-
-        } elseif ( ! empty( $this->settings[ $args['id'] ] ) ) {
+        if ( ! empty( $this->settings[ $args['id'] ] ) ) {
 
             $selected = $this->settings[ $args['id'] ];
 
         } elseif ( 'site_selector' == $args['id'] ) {
 
-            $site_data = get_site_data();
+            $data = get_transient( 'ohdear_current_site' );
 
-            if ( ! empty( $site_data['sort_url'] ) && is_current_site( $site_data['sort_url'] ) )
+            $site_selector = ( is_array( $data ) && ! empty( $data['id'] ) ) ? $data['id'] : '';
+
+            $site_data = get_site_data( $site_selector );
+
+            if ( ! empty( $site_data['sort_url'] ) )
                 $selected = $site_data['sort_url'];
         }
 

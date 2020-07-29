@@ -67,17 +67,17 @@ function delete_cache( $name = '' ) {
 /**
  * Get current site data
  *
- * @return mixed
+ * @param string $site_selector
+ *
+ * @return array|bool|mixed
  */
-function get_site_data() {
+function get_site_data( $site_selector = '' ) {
 
     //debug_log( __FUNCTION__ );
 
     $data = get_transient( 'ohdear_current_site' );
 
-    $settings = get_settings();
-
-    if ( is_array( $data ) && ! empty( $data ) && ! empty( $settings[ 'site_selector' ] ) && $settings[ 'site_selector' ] == $data['id'] )
+    if ( is_array( $data ) && ! empty( $data ) && $site_selector == $data['id'] )
         return $data;
 
     $sites = ohdear()->api->get_sites();
@@ -85,11 +85,11 @@ function get_site_data() {
     if ( ! is_array( $sites ) || empty( $sites['data'] ) || ! is_array( $sites['data'] ) )
         return false;
 
-    if ( ! empty( $settings[ 'site_selector' ] ) ) {
+    if ( ! empty( $site_selector ) ) {
 
         foreach ( $sites['data'] as $key => $site_data ) {
 
-            if ( $site_data['id'] == $settings[ 'site_selector' ] ) {
+            if ( $site_data['id'] == $site_selector ) {
 
                 $data = $site_data;
                 break;
@@ -108,9 +108,6 @@ function get_site_data() {
         }
     }
 
-    if ( ! is_array( $data ) || empty( $data['id'] ) )
-        return false;
-
     //debug_log( '$data:' );
     //debug_log( $data );
 
@@ -126,20 +123,22 @@ function get_site_data() {
  */
 function is_current_site( $url ) {
 
-// @Todo: 'mhthemes.com' is just for debugging here
+    //debug_log( $url );
 
-//    return ( strpos( home_url(), $url ) !== false );
-    return ( strpos( 'mhthemes.com', $url ) !== false );
+    //return ( strpos( 'https://mhthemes.com', $url ) !== false );
+    return ( strpos( home_url(), $url ) !== false );
 }
 
 /**
+ * @param string $site_selector
+ *
  * @return bool|string
  */
-function get_site_id() {
+function get_site_id( $site_selector = '' ) {
 
     //debug_log( __FUNCTION__ );
 
-    $data = get_site_data();
+    $data = get_site_data( $site_selector );
 
     //debug_log( '$data:' );
     //debug_log( $data );

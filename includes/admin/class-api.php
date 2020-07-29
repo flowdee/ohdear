@@ -106,7 +106,7 @@ class OhDear_API {
         if ( ! empty( $uptime ) )
             return $uptime;
 
-        $site_id = get_site_id();
+        $site_id = get_site_id( $this->settings['site_selector'] );
 
         if ( empty( $site_id ) )
             return false;
@@ -145,7 +145,7 @@ class OhDear_API {
         if ( ! empty( $perf ) )
             return $perf;
 
-        $site_id = get_site_id();
+        $site_id = get_site_id( $this->settings['site_selector'] );
 
         if ( empty( $site_id ) )
             return false;
@@ -184,7 +184,7 @@ class OhDear_API {
         if ( ! empty( $broken ) )
             return $broken;
 
-        $site_id = get_site_id();
+        $site_id = get_site_id( $this->settings['site_selector'] );
 
         if ( empty( $site_id ) )
             return false;
@@ -206,14 +206,13 @@ class OhDear_API {
      * @param string $url
      * @param array $args
      *
-     * @return array|mixed|null|object|string
+     * @return bool|mixed
      */
     private function request( $url = '', $args = array() ) {
 
         //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
-        //debug_log( '$url:' );
-        //debug_log( $url );
+        //debug_log( '$url: ' . $url );
 
         if ( empty( $this->api_key ) )
             return false;
@@ -244,40 +243,44 @@ class OhDear_API {
             }
         }
 
-        $response = wp_remote_get( $this->api_url . $url, array(
-            'headers' => array(
-                'Authorization' => 'Bearer ' . $this->api_key,
-                'Content-Type'  => 'application/json'
-            ),
-            //'body' => wp_json_encode( $args ),
-            'timeout' => 15
-        ));
+        try {
 
-        //debug_log( '$response:' );
-        //debug_log( $response );
+            $response = wp_remote_get( $this->api_url . $url, array(
+                'headers' => array(
+                    'Authorization' => 'Bearer ' . $this->api_key,
+                    'Content-Type'  => 'application/json'
+                ),
+                'timeout' => 15
+            ));
 
-        // Check for error
-        if ( is_wp_error( $response ) ) {
+            //debug_log( '$response:' );
+            //debug_log( $response );
 
-            debug_log( 'API REQUEST ERROR: ' . $response->get_error_message() );
+            // Check for error
+            if ( is_wp_error( $response ) )
+                throw new \Exception( 'API REQUEST ERROR: ' . $response->get_error_message() );
+
+            if ( empty( $response['body'] ) )
+                throw new \Exception( "Response from '" . $url . "' URL is empty" );
+
+            $result = wp_remote_retrieve_body( $response );
+
+            $result = json_decode( $result, true );
+
+            //debug_log( '$result:' );
+            //debug_log( $result );
+
+            if ( empty( $result ) )
+                throw new \Exception( 'Can not decode response JSON to assoc array' );
+
+            if ( ! empty( $result['error'] ) )
+                throw new \Exception( 'API RESPONSE ERROR: ' . $result['error'] );
+
+        } catch ( \Exception $e ) {
+
+            debug_log( $e->getMessage() );
             return false;
         }
-
-        if ( empty( $response['body'] ) ) {
-
-            debug_log( "Response from '" . $url . "' URL is empty" );
-            return false;
-        }
-
-        $result = wp_remote_retrieve_body( $response );
-
-        $result = json_decode( $result, true );
-
-        //debug_log( '$result:' );
-        //debug_log( $result );
-
-        if ( empty( $result ) )
-            debug_log( 'Can not decode response JSON to assoc array' );
 
         return $result;
     }
