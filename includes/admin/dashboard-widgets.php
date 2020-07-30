@@ -141,7 +141,7 @@ function prepare_widget_data() {
  */
 function render_widget_bottom() {
     ?>
-        <p class="help" style="text-align: center;">
+        <p class="community-events-footer help" style="text-align: center;">
             <?php
                 /* translators: 1: Tab link, 2: Tab name */
                 printf( '<a href="%1$s" title="%2$s">%2$s</a>',
