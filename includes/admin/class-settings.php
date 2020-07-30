@@ -255,7 +255,8 @@ class OhDear_Settings {
                 'api_key' => array(
                     'name' => __( 'API Token', 'ohdear' ),
                     'type' => 'password',
-                    'desc' => sprintf( wp_kses( __( 'Enter your OhDear API token, found on your <a href="%s" target="_blank">OhDear api settings page</a>', 'ohdear' ),
+                    'desc' => /* translators: OhDear page link */
+                              sprintf( wp_kses( __( 'Enter your OhDear API token, found on your <a href="%s" target="_blank">OhDear api settings page</a>', 'ohdear' ),
                                                 array( 'a' => array( 'href' => array(), 'target' => array() ) )
                                        ), esc_url( 'https://ohdear.app/user-settings/api' ) ),
                 ),
@@ -416,6 +417,7 @@ class OhDear_Settings {
      * @return void
      */
     public function missing_callback( $args ) {
+        /* translators: Callback name, passed by the setting */
         printf( __( 'The callback function used for the <strong>%s</strong> setting is missing.', 'ohdear' ), $args['id'] );
     }
 

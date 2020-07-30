@@ -15,10 +15,12 @@ $settings = get_settings(); ?>
 <?php if ( empty( $settings['api_status'] ) ) : ?>
 
     <div class="notice notice-warning inline">
-        <p><?php printf( __( 'Please set the valid Oh Dear API token at <a href="%1$s" title="%2$s">%2$s</a> tab.', 'ohdear' ),
-                esc_url( add_query_arg( array( 'tab' => 'settings' ) ) ),
-                esc_attr( 'Settings', 'ohdear' )
-            );
+        <p>
+            <?php /* translators: 1: Plugin settings page link, 2: 'Settings' word */
+                printf( __( 'Please set the valid Oh Dear API token at <a href="%1$s" title="%2$s">%2$s</a> tab.', 'ohdear' ),
+                        esc_url( add_query_arg( array( 'tab' => 'settings' ) ) ),
+                        esc_attr( 'Settings', 'ohdear' )
+                );
             ?>
         </p>
     </div>
@@ -26,10 +28,12 @@ $settings = get_settings(); ?>
 <?php elseif ( empty( $settings['site_selector'] ) ) : ?>
 
     <div class="notice notice-warning inline">
-        <p><?php printf( __( 'Please set the site at <a href="%1$s" title="%2$s">%2$s</a> tab.', 'ohdear' ),
-                esc_url( add_query_arg( array( 'tab' => 'settings' ) ) ),
-                esc_attr( 'Settings', 'ohdear' )
-            );
+        <p>
+            <?php /* translators: 1: Plugin settings page link, 2: 'Settings' word */
+                printf( __( 'Please set the site at <a href="%1$s" title="%2$s">%2$s</a> tab.', 'ohdear' ),
+                        esc_url( add_query_arg( array( 'tab' => 'settings' ) ) ),
+                        esc_attr( 'Settings', 'ohdear' )
+                );
             ?>
         </p>
     </div>
