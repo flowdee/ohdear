@@ -36,11 +36,17 @@ $settings = get_settings(); ?>
 
 <?php else :
 
-    $data = get_site_data( $settings['site_selector'] ); ?>
+    $data = get_site_data( $settings['site_selector'] );
 
+    if ( empty( $data['id'] ) || empty( $data['url'] ) ) {
+
+        debug_log( 'ERROR: ' . 'views/dashboard.php' . ' | ' . '$data is incorrect' );
+        return;
+    }
+?>
     <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
 
-    <?php
+<?php
     include_once 'dashboard-templates/uptime.php';
     include_once 'dashboard-templates/performance.php';
     include_once 'dashboard-templates/broken.php';

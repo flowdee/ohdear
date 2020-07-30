@@ -5,7 +5,15 @@ namespace OhDear;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/** Performance **/ ?>
+/** Performance **/
+
+if ( empty( $data['id'] ) ||
+     empty( $data['checks'][1]['id'] ) ||
+     empty( $data['checks'][1]['latest_run_ended_at'] )
+){
+    debug_log( 'ERROR: ' . 'views/performance.php' . ' | ' . '$data is incorrect' );
+    return;
+} ?>
 
 <div class="dashboard__section">
 

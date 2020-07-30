@@ -5,7 +5,14 @@ namespace OhDear;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/** Uptime **/ ?>
+/** Uptime **/
+
+if ( empty( $data['id'] ) ||
+     empty( $data['checks'][0]['latest_run_ended_at'] )
+){
+    debug_log( 'ERROR: ' . 'views/uptime.php' . ' | ' . '$data is incorrect' );
+    return;
+} ?>
 
 <div class="dashboard__section">
 

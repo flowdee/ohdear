@@ -5,7 +5,15 @@ namespace OhDear;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-/** Broken Links **/ ?>
+/** Broken Links **/
+
+if ( empty( $data['id'] ) ||
+     empty( $data['checks'][2]['id'] ) ||
+     empty( $data['checks'][2]['latest_run_ended_at'] )
+){
+    debug_log( 'ERROR: ' . 'views/broken.php' . ' | ' . '$data is incorrect' );
+    return;
+} ?>
 
 <div class="dashboard__section">
 
