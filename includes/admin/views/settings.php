@@ -6,7 +6,9 @@
 namespace OhDear;
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit; ?>
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! isset( $active_tab ) ) return; ?>
 
 <h2><?php esc_html_e( 'Oh Dear Settings', 'ohdear' ); ?></h2>
 
