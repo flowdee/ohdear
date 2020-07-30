@@ -47,8 +47,8 @@ $settings = get_settings(); ?>
     <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
 
 <?php
-    include_once 'dashboard-templates/uptime.php';
-    include_once 'dashboard-templates/performance.php';
-    include_once 'dashboard-templates/broken.php';
+    include_once 'templates/uptime.php';
+    include_once 'templates/performance.php';
+    include_once 'templates/broken.php';
 
 endif;
