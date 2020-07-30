@@ -45,15 +45,16 @@ class OhDear_Admin_Menu {
             <h2 class="nav-tab-wrapper">
 
                 <?php
-                foreach ( $tabs as $tab_id => $tab_name ) {
-                    $tab_url = add_query_arg( array( 'tab' => $tab_id ) );
+                    foreach ( $tabs as $tab_id => $tab_name ) {
+                        $tab_url = add_query_arg( array( 'tab' => $tab_id ) );
 
-                    printf( '<a href="%1$s" title="%2$s" class="%3$s">%2$s</a>',
-                            esc_url( $tab_url ),
-                            esc_attr( $tab_name ),
-                            ( $active_tab == $tab_id ) ? 'nav-tab nav-tab-active' : 'nav-tab'
-                    );
-                }
+                        /* translators: 1: Tab link, 2: Tab name, 3: CSS class name */
+                        printf( '<a href="%1$s" title="%2$s" class="%3$s">%2$s</a>',
+                                esc_url( $tab_url ),
+                                esc_attr__( $tab_name, 'ohdear' ),
+                                ( $active_tab == $tab_id ) ? 'nav-tab nav-tab-active' : 'nav-tab'
+                        );
+                    }
                 ?>
             </h2>
 

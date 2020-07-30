@@ -11,15 +11,16 @@ if ( empty( $data['id'] ) ||
      empty( $data['checks'][2]['id'] ) ||
      empty( $data['checks'][2]['latest_run_ended_at'] )
 ){
-    debug_log( 'ERROR: ' . 'views/broken.php' . ' | ' . '$data is incorrect' );
+    debug_log( 'ERROR: ' . 'admin/views/templates/broken.php' . ' | ' . '$data is incorrect' );
     return;
 } ?>
 
 <div class="dashboard__section">
 
-    <h3><?php _e( 'Broken Links', 'ohdear' );
+    <h3><?php echo __( 'Broken Links', 'ohdear' ) . '&nbsp;&nbsp;';
 
-            printf( '<a href="%1$s" title="%2$s" target="_blank" class="title-link">%2$s</a>',
+            /* translators: 1: Oh Dear API link, 2: 'Open on Oh Dear' phrase */
+            printf( '<a href="%1$s" title="%2$s" target="_blank" style="font-weight: normal; font-size: small;">%2$s</a>',
                     'https://ohdear.app/sites/' . $data['id'] . '/checks/' . $data['checks'][2]['id'] . '/report/',
                     esc_html__( 'Open on Oh Dear', 'ohdear' )
             );
@@ -68,6 +69,7 @@ if ( empty( $data['id'] ) ||
 
                                 if ( $post_id > 0 ) {
 
+                                    /* translators: 1: Post edit link, 2: 'Edit' word */
                                     printf( '<a href="%1$s" target="_blank">%2$s</a>',
                                             admin_url( 'post.php?post=' . $post_id . '&action=edit' ),
                                             esc_html__( 'Edit', 'ohdear' )
@@ -82,11 +84,13 @@ if ( empty( $data['id'] ) ||
             </table>
 
         <?php else : ?>
+
             <div class="notice notice-warning inline">
                 <p>
-                    <?php _e( 'No Broken Links were found for the current site', 'ohdear' ); ?>
+                    <?php _e( 'No Broken Links for the current site', 'ohdear' ); ?>
                 </p>
             </div>
+
         <?php endif; ?>
 
 </div><!-- /.dashboard__section -->

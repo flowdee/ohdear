@@ -11,15 +11,16 @@ if ( empty( $data['id'] ) ||
      empty( $data['checks'][1]['id'] ) ||
      empty( $data['checks'][1]['latest_run_ended_at'] )
 ){
-    debug_log( 'ERROR: ' . 'views/performance.php' . ' | ' . '$data is incorrect' );
+    debug_log( 'ERROR: ' . 'admin/views/templates/performance.php' . ' | ' . '$data is incorrect' );
     return;
 } ?>
 
 <div class="dashboard__section">
 
-    <h3><?php _e( 'Performance', 'ohdear' );
+    <h3><?php echo __( 'Performance', 'ohdear' ) . '&nbsp;&nbsp;';
 
-            printf( '<a href="%1$s" title="%2$s" target="_blank" class="title-link">%2$s</a>',
+            /* translators: 1: Oh Dear API link, 2: 'Open on Oh Dear' phrase */
+            printf( '<a href="%1$s" title="%2$s" target="_blank" style="font-weight: normal; font-size: small;">%2$s</a>',
                     'https://ohdear.app/sites/' . $data['id'] . '/checks/' . $data['checks'][1]['id'] . '/report/',
                     esc_html__( 'Open on Oh Dear', 'ohdear' )
             );
@@ -180,12 +181,13 @@ if ( empty( $data['id'] ) ||
             <?php endif;
 
         else : ?>
+
             <div class="notice notice-warning inline">
                 <p>
-                    <?php _e( 'No Performance stats were received for the current site', 'ohdear' ); ?>
+                    <?php _e( 'No Performance stats for the current site', 'ohdear' ); ?>
                 </p>
             </div>
-        <?php endif;
-    ?>
+
+        <?php endif; ?>
 
 </div><!-- /.dashboard__section -->

@@ -95,7 +95,7 @@ class OhDear_API {
     /**
      * Get uptime stats
      *
-     * @return mixed
+     * @return bool|mixed
      */
     public function get_uptime() {
 
@@ -134,7 +134,7 @@ class OhDear_API {
     /**
      * Get performance stats
      *
-     * @return mixed
+     * @return bool|mixed
      */
     public function get_perf() {
 
@@ -173,7 +173,7 @@ class OhDear_API {
     /**
      * Get broken links
      *
-     * @return mixed
+     * @return bool|mixed
      */
     public function get_broken() {
 

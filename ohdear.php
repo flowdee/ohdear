@@ -169,6 +169,7 @@ final class OhDear {
             require_once __DIR__ . '/includes/admin/class-menu.php';
             require_once __DIR__ . '/includes/admin/plugins.php';
             require_once __DIR__ . '/includes/admin/class-settings.php';
+            require_once __DIR__ . '/includes/admin/dashboard-widgets.php';
         }
     }
 

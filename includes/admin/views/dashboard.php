@@ -19,7 +19,7 @@ $settings = get_settings(); ?>
             <?php /* translators: 1: Plugin settings page link, 2: 'Settings' word */
                 printf( __( 'Please set the valid Oh Dear API token at <a href="%1$s" title="%2$s">%2$s</a> tab.', 'ohdear' ),
                         esc_url( add_query_arg( array( 'tab' => 'settings' ) ) ),
-                        esc_attr( 'Settings', 'ohdear' )
+                        esc_attr__( 'Settings', 'ohdear' )
                 );
             ?>
         </p>
@@ -32,7 +32,7 @@ $settings = get_settings(); ?>
             <?php /* translators: 1: Plugin settings page link, 2: 'Settings' word */
                 printf( __( 'Please set the site at <a href="%1$s" title="%2$s">%2$s</a> tab.', 'ohdear' ),
                         esc_url( add_query_arg( array( 'tab' => 'settings' ) ) ),
-                        esc_attr( 'Settings', 'ohdear' )
+                        esc_attr__( 'Settings', 'ohdear' )
                 );
             ?>
         </p>
@@ -44,7 +44,7 @@ $settings = get_settings(); ?>
 
     if ( empty( $data['id'] ) || empty( $data['url'] ) ) {
 
-        debug_log( 'ERROR: ' . 'views/dashboard.php' . ' | ' . '$data is incorrect' );
+        debug_log( 'ERROR: ' . 'admin/views/dashboard.php' . ' | ' . '$data is incorrect' );
         return;
     }
 ?>

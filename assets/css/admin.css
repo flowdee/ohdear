@@ -19,7 +19,7 @@ select[name="ohdear_settings[user_roles_access][]"] {
   color: red;
 }
 
-/** Stats Section **/
+/** Monitoring Dashboard Section **/
 
 .dashboard__section {
   margin: 20px 0;
@@ -27,15 +27,6 @@ select[name="ohdear_settings[user_roles_access][]"] {
   background: white;
   border-radius: 6px;
   border: 1px solid #ddd;
-}
-
-/** Stats Title **/
-
-.dashboard__section .title-link {
-  display: inline-block;
-  margin-left: 10px;
-  font-weight: normal;
-  font-size: small;
 }
 
 /** Charts **/
