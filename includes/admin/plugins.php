@@ -22,8 +22,8 @@ function add_action_links( $links, $file ) {
         return $links;
     }
 
-    $dashboard_link = '<a href="' . admin_url( 'index.php?page=' . OHDEAR_PAGE ) . '">' . esc_html__( 'Dashboard', 'ohdear' ) . '</a>';
-    $settings_link  = '<a href="' . admin_url( 'index.php?page=' . OHDEAR_PAGE . '&tab=settings' ) . '">' . esc_html__( 'Settings', 'ohdear' ) . '</a>';
+    $dashboard_link = '<a href="' . admin_url( 'admin.php?page=' . OHDEAR_PAGE ) . '">' . esc_html__( 'Dashboard', 'ohdear' ) . '</a>';
+    $settings_link  = '<a href="' . admin_url( 'admin.php?page=' . OHDEAR_PAGE . '-settings' ) . '">' . esc_html__( 'Settings', 'ohdear' ) . '</a>';
 
     array_unshift( $links, $dashboard_link, $settings_link );
 

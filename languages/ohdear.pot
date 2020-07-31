@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-07-30T14:07:51+03:00\n"
+"POT-Creation-Date: 2020-08-01T01:48:17+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: ohdear\n"
@@ -37,16 +37,12 @@ msgstr ""
 msgid "Websites uptime monitoring."
 msgstr ""
 
-#: includes/admin/class-menu.php:69
-msgid "This page needs the JavaScript to be enabled"
-msgstr ""
-
-#: includes/admin/class-menu.php:86
+#: includes/admin/class-menu.php:31
 #: includes/admin/plugins.php:25
 msgid "Dashboard"
 msgstr ""
 
-#: includes/admin/class-menu.php:87
+#: includes/admin/class-menu.php:33
 #: includes/admin/plugins.php:26
 msgid "Settings"
 msgstr ""
@@ -80,31 +76,56 @@ msgstr ""
 msgid "Select which user roles can access the Oh Dear monitoring (administrators have access by default)"
 msgstr ""
 
+#: includes/admin/class-settings.php:323
+msgid "Please enter a valid API token before selecting a site"
+msgstr ""
+
 #. translators: Callback name, passed by the setting
-#: includes/admin/class-settings.php:421
+#: includes/admin/class-settings.php:427
 msgid "The callback function used for the <strong>%s</strong> setting is missing."
 msgstr ""
 
-#: includes/admin/class-settings.php:470
+#: includes/admin/class-settings.php:476
 msgid "No sites found"
 msgstr ""
 
-#: includes/admin/class-settings.php:482
+#: includes/admin/class-settings.php:488
 msgid "Please select a site"
 msgstr ""
 
-#: includes/admin/views/dashboard.php:13
+#: includes/admin/dashboard-widgets.php:23
+msgid "Oh Dear Uptime"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:24
+msgid "Oh Dear Performance"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:25
+msgid "Oh Dear Broken Links"
+msgstr ""
+
+#: includes/admin/dashboard-widgets.php:156
+msgid "View all "
+msgstr ""
+
+#: includes/admin/views/dashboard.php:23
 msgid "Oh Dear Monitoring"
 msgstr ""
 
 #. translators: 1: Plugin settings page link, 2: 'Settings' word
-#: includes/admin/views/dashboard.php:20
-msgid "Please set the valid Oh Dear API token at <a href=\"%1$s\" title=\"%2$s\">%2$s</a> tab."
+#: includes/admin/views/dashboard.php:30
+msgid "Please set the valid Oh Dear API token at <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+msgstr ""
+
+#: includes/admin/views/dashboard.php:32
+#: includes/admin/views/dashboard.php:45
+msgid "Settings page"
 msgstr ""
 
 #. translators: 1: Plugin settings page link, 2: 'Settings' word
-#: includes/admin/views/dashboard.php:33
-msgid "Please set the site at <a href=\"%1$s\" title=\"%2$s\">%2$s</a> tab."
+#: includes/admin/views/dashboard.php:43
+msgid "Please set the site at <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
 msgstr ""
 
 #: includes/admin/views/settings.php:11
@@ -115,64 +136,64 @@ msgstr ""
 msgid "Broken Links"
 msgstr ""
 
-#: includes/admin/views/templates/broken.php:24
-#: includes/admin/views/templates/performance.php:24
-#: includes/admin/views/templates/uptime.php:23
+#: includes/admin/views/templates/broken.php:25
+#: includes/admin/views/templates/performance.php:25
+#: includes/admin/views/templates/uptime.php:24
 msgid "Open on Oh Dear"
 msgstr ""
 
-#: includes/admin/views/templates/broken.php:34
-#: includes/admin/views/templates/performance.php:55
-#: includes/admin/views/templates/uptime.php:46
+#: includes/admin/views/templates/broken.php:35
+#: includes/admin/views/templates/performance.php:56
 msgid "Last time checked"
 msgstr ""
 
-#: includes/admin/views/templates/broken.php:40
+#: includes/admin/views/templates/broken.php:41
 msgid "Status Code"
 msgstr ""
 
-#: includes/admin/views/templates/broken.php:44
+#: includes/admin/views/templates/broken.php:45
 msgid "Broken Link"
 msgstr ""
 
-#: includes/admin/views/templates/broken.php:48
+#: includes/admin/views/templates/broken.php:49
 msgid "Found on"
 msgstr ""
 
-#: includes/admin/views/templates/broken.php:52
+#: includes/admin/views/templates/broken.php:53
 msgid "Actions"
 msgstr ""
 
-#: includes/admin/views/templates/broken.php:73
+#: includes/admin/views/templates/broken.php:75
 msgid "Edit"
 msgstr ""
 
-#: includes/admin/views/templates/broken.php:87
-msgid "No Broken Links were found for the current site"
+#: includes/admin/views/templates/broken.php:90
+msgid "No Broken Links for the current site"
 msgstr ""
 
 #: includes/admin/views/templates/performance.php:20
 msgid "Performance"
 msgstr ""
 
-#: includes/admin/views/templates/performance.php:55
+#: includes/admin/views/templates/performance.php:56
 msgid "Last 7 days"
 msgstr ""
 
-#: includes/admin/views/templates/performance.php:185
-msgid "No Performance stats were received for the current site"
+#: includes/admin/views/templates/performance.php:194
+msgid "No Performance stats for the current site"
 msgstr ""
 
 #: includes/admin/views/templates/uptime.php:19
 msgid "Uptime"
 msgstr ""
 
-#: includes/admin/views/templates/uptime.php:46
-msgid "Last 30 days"
+#. translators: 1: Days count, 2: Date
+#: includes/admin/views/templates/uptime.php:47
+msgid "Last %1$s days. Last time checked: %2$s"
 msgstr ""
 
-#: includes/admin/views/templates/uptime.php:101
-msgid "No Uptime stats were received for the current site"
+#: includes/admin/views/templates/uptime.php:115
+msgid "No Uptime stats for the current site"
 msgstr ""
 
 #: ohdear.php:93

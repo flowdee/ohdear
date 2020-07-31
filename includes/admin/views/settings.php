@@ -6,9 +6,7 @@
 namespace OhDear;
 
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
-
-if ( ! isset( $active_tab ) ) return; ?>
+if ( ! defined( 'ABSPATH' ) ) exit; ?>
 
 <h2><?php esc_html_e( 'Oh Dear Settings', 'ohdear' ); ?></h2>
 
@@ -16,7 +14,7 @@ if ( ! isset( $active_tab ) ) return; ?>
     <table class="form-table">
         <?php
             settings_fields( 'ohdear_settings' );
-            do_settings_fields( 'ohdear_settings_' . $active_tab, 'ohdear_settings_' . $active_tab );
+            do_settings_fields( 'ohdear_settings_settings', 'ohdear_settings_settings' );
         ?>
     </table>
     <?php submit_button(); ?>

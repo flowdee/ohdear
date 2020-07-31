@@ -26,7 +26,7 @@ class OhDear_Settings {
      * @return bool
      */
     private function is_settings_page() {
-        return ( isset( $_GET['page'] ) && 'ohdear' === $_GET['page'] );
+        return ( isset( $_GET['page'] ) && 'ohdear-settings' === $_GET['page'] );
     }
 
     /**

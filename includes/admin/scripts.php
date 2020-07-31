@@ -20,7 +20,7 @@ function is_admin_page() {
 	if ( isset( $_GET['page'] ) )
 	    $page = sanitize_text_field( $_GET['page'] );
 
-	$pages = array( OHDEAR_PAGE );
+	$pages = array( OHDEAR_PAGE, OHDEAR_PAGE . '-settings' );
 
 	if ( ! empty( $page ) )
 	    $ret = in_array( $page, $pages );

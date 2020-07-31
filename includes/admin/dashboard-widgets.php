@@ -150,9 +150,9 @@ function render_widget_bottom( $name = 'statistics' ) {
     ?>
         <p class="community-events-footer help" style="text-align: center;">
             <?php
-                /* translators: 1: Tab link, 2: Tab name */
+                /* translators: 1: Plugin page link, 2: Phrase: 'View all statistics' or 'View all broken links' */
                 printf( '<a href="%1$s" title="%2$s">%2$s</a>',
-                        esc_url( ( admin_url( 'index.php?page=' . OHDEAR_PAGE ) ) ),
+                        esc_url( ( admin_url( 'admin.php?page=' . OHDEAR_PAGE ) ) ),
                         __( 'View all ' . $name, 'ohdear' )
                 );
             ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Stats Template
+ * Monitoring Dashboard Template
  */
 
 namespace OhDear;
@@ -8,7 +8,17 @@ namespace OhDear;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$settings = get_settings(); ?>
+$settings = get_settings();
+
+if ( empty( $settings['api_status'] ) || empty( $settings['site_selector'] ) ) {
+
+// @Todo: finish redirect to settings page
+//    $url = add_query_arg( array( 'page' => OHDEAR_PAGE . '-settings' ), admin_url( 'admin.php' ) );
+//
+//debug_log( '$url: ' . $url );
+//
+//    wp_safe_redirect( $url ); exit;
+} ?>
 
 <h2><?php esc_html_e( 'Oh Dear Monitoring', 'ohdear' ); ?></h2>
 
@@ -17,9 +27,9 @@ $settings = get_settings(); ?>
     <div class="notice notice-warning inline">
         <p>
             <?php /* translators: 1: Plugin settings page link, 2: 'Settings' word */
-                printf( __( 'Please set the valid Oh Dear API token at <a href="%1$s" title="%2$s">%2$s</a> tab.', 'ohdear' ),
-                        esc_url( add_query_arg( array( 'tab' => 'settings' ) ) ),
-                        esc_attr__( 'Settings', 'ohdear' )
+                printf( __( 'Please set the valid Oh Dear API token at <a href="%1$s" title="%2$s">%2$s</a>.', 'ohdear' ),
+                        esc_url( add_query_arg( array( 'page' => OHDEAR_PAGE . '-settings' ), admin_url( 'admin.php' ) ) ),
+                        esc_attr__( 'Settings page', 'ohdear' )
                 );
             ?>
         </p>
@@ -30,9 +40,9 @@ $settings = get_settings(); ?>
     <div class="notice notice-warning inline">
         <p>
             <?php /* translators: 1: Plugin settings page link, 2: 'Settings' word */
-                printf( __( 'Please set the site at <a href="%1$s" title="%2$s">%2$s</a> tab.', 'ohdear' ),
-                        esc_url( add_query_arg( array( 'tab' => 'settings' ) ) ),
-                        esc_attr__( 'Settings', 'ohdear' )
+                printf( __( 'Please set the site at <a href="%1$s" title="%2$s">%2$s</a>.', 'ohdear' ),
+                    esc_url( add_query_arg( array( 'page' => OHDEAR_PAGE . '-settings' ), admin_url( 'admin.php' ) ) ),
+                        esc_attr__( 'Settings page', 'ohdear' )
                 );
             ?>
         </p>

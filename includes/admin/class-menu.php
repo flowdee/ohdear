@@ -26,77 +26,42 @@ class OhDear_Admin_Menu {
 
         // @Todo: capability 'manage_options' displays for "admins" only. Expand for other user roles
 
-        add_submenu_page( 'index.php', esc_html__( 'Oh Dear', 'ohdear' ), esc_html__( 'Oh Dear', 'ohdear' ), 'manage_options', OHDEAR_PAGE, array( $this, 'view_template' ) );
+        add_menu_page( esc_html__( 'Oh Dear', 'ohdear' ), esc_html__( 'Oh Dear', 'ohdear' ), 'manage_options', OHDEAR_PAGE, array( $this, 'view_dashboard' ), OHDEAR_PLUGIN_URL . 'assets/images/icon.png' );
+
+        add_submenu_page( OHDEAR_PAGE, esc_html__( 'Dashboard', 'ohdear' ), esc_html__( 'Dashboard', 'ohdear' ), 'manage_options', OHDEAR_PAGE, array( $this, 'view_dashboard' ) );
+
+        add_submenu_page( OHDEAR_PAGE, esc_html__( 'Settings', 'ohdear' ), esc_html__( 'Settings', 'ohdear' ), 'manage_options', OHDEAR_PAGE . '-settings', array( $this, 'view_settings' ) );
     }
 
     /**
-     * Output admin template
+     * Output dashboard page template
      */
-    public function view_template() {
+    public function view_dashboard() {
 
-        $tabs = $this->get_settings_tabs();
-
-        $active_tab = ( isset( $_GET['tab'] ) && array_key_exists( $_GET['tab'], $tabs ) ) ? $_GET['tab'] : 'dashboard';
-
-        ob_start();
+//        ob_start();
         ?>
         <div class="wrap">
 
-            <h2 class="nav-tab-wrapper">
+            <?php include 'views/dashboard.php'; ?>
 
-                <?php
-                    foreach ( $tabs as $tab_id => $tab_name ) {
-                        $tab_url = add_query_arg( array( 'tab' => $tab_id ) );
-
-                        /* translators: 1: Tab link, 2: Tab name, 3: CSS class name */
-                        printf( '<a href="%1$s" title="%2$s" class="%3$s">%2$s</a>',
-                                esc_url( $tab_url ),
-                                esc_attr__( $tab_name, 'ohdear' ),
-                                ( $active_tab == $tab_id ) ? 'nav-tab nav-tab-active' : 'nav-tab'
-                        );
-                    }
-                ?>
-            </h2>
-
-            <div id="tab_container">
-
-                <?php include 'views/' . $active_tab . '.php'; ?>
-
-            </div><!-- #tab_container-->
-
-            <noscript>
-                <div class="notice notice-warning inline">
-                    <p>
-                        <?php echo esc_html__( 'This page needs the JavaScript to be enabled', 'ohdear' ); ?>
-                    </p>
-                </div>
-            </noscript>
         </div><!-- /.wrap -->
         <?php
-        echo ob_get_clean();
+//        echo ob_get_clean();
     }
 
     /**
-     * Retrieves the settings tabs.
-     *
-     * @return array $tabs Settings tabs.
+     * Output settings page template
      */
-    private function get_settings_tabs() {
+    public function view_settings() {
+        ?>
+        <div class="wrap">
 
-        $tabs = array(
-            'dashboard' => __( 'Dashboard', 'ohdear' ),
-            'settings'  => __( 'Settings', 'ohdear' )
-        );
+            <?php include 'views/settings.php'; ?>
 
-        /**
-         * Filters the list of settings tabs.
-         *
-         * @since 1.0
-         *
-         * @param array $tabs Settings tabs.
-         */
-        return $tabs;
+        </div><!-- /.wrap -->
+        <?php
     }
+
 }
 
 $ohdear_menu = new OhDear_Admin_Menu;
