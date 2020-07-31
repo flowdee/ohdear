@@ -318,6 +318,12 @@ class OhDear_Settings {
 
         //debug_log( __CLASS__ . ' >>> ' . __FUNCTION__ );
 
+        if ( empty( $this->settings[ 'api_status' ] ) ) {
+
+            _e( 'Please enter a valid API token before selecting a site', 'ohdear' );
+            return;
+        }
+
         $selected = '';
 
         if ( ! empty( $this->settings[ $args['id'] ] ) ) {
