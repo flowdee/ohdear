@@ -52,8 +52,6 @@ function load_uptime_widget() {
 
 	<div class="dashboard_ohdear">
 
-        <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
-
         <?php
             $u_height = '200';
             $u_days = 7;
@@ -83,8 +81,6 @@ function load_perf_widget() {
 
     <div class="dashboard_ohdear">
 
-        <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
-
         <?php
             $p_height = '200';
             $p_hide_legend = 1;
@@ -111,8 +107,6 @@ function load_broken_widget() {
     if ( ! $data )
         die();
     ?>
-
-    <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
 
     <div class="dashboard_ohdear">
         <?php
