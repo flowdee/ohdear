@@ -61,7 +61,7 @@ if ( empty( $data['id'] ) ||
                   var
                     options = {
                       chart: {
-                        height: 300,
+                        height: <?php echo ( ! empty( $p_height ) ) ? (string) $p_height : '350'; ?>,
                         type: 'area'
                       },
                       dataLabels: {
@@ -78,6 +78,13 @@ if ( empty( $data['id'] ) ||
                       tooltip: {
                         x: {
                           format: 'dd MMM, HH:mm'
+                        },
+                      },
+                      legend: {
+                        show: <?php echo ( isset( $p_hide_legend ) ) ? 0 : 1; ?>,
+                        itemMargin: {
+                          horizontal: 25,
+                          vertical: 25
                         },
                       },
                       series: [

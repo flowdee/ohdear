@@ -163,7 +163,7 @@ class OhDear_Settings {
 
             if ( $site_selector_new != $site_selector ) {
 
-            delete_transient( 'ohdear_current_site' );
+                delete_cache();
 
             $input['site_selector'] = get_site_id( $site_selector_new );
 

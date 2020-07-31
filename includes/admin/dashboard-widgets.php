@@ -51,6 +51,9 @@ function load_uptime_widget() {
     ?>
 
 	<div class="dashboard_ohdear">
+
+        <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
+
         <?php
             $u_height = '200';
             $u_days = 7;
@@ -79,7 +82,13 @@ function load_perf_widget() {
     ?>
 
     <div class="dashboard_ohdear">
+
+        <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
+
         <?php
+            $p_height = '200';
+            $p_hide_legend = 1;
+
             include_once 'views/templates/performance.php';
 
             render_widget_bottom();
@@ -103,11 +112,13 @@ function load_broken_widget() {
         die();
     ?>
 
+    <p><?php printf( '<a href="https://ohdear.app/sites/%1$s" title="%2$s" target="_blank">%2$s</a>', $data['id'], $data['url'] ); ?></p>
+
     <div class="dashboard_ohdear">
         <?php
             include_once 'views/templates/broken.php';
 
-            render_widget_bottom();
+            render_widget_bottom( 'broken links' );
         ?>
 	</div>
 
@@ -137,16 +148,18 @@ function prepare_widget_data() {
 }
 
 /**
+ * @param string $name
+ *
  * @return void
  */
-function render_widget_bottom() {
+function render_widget_bottom( $name = 'statistics' ) {
     ?>
         <p class="community-events-footer help" style="text-align: center;">
             <?php
                 /* translators: 1: Tab link, 2: Tab name */
                 printf( '<a href="%1$s" title="%2$s">%2$s</a>',
                         esc_url( ( admin_url( 'index.php?page=' . OHDEAR_PAGE ) ) ),
-                        __( 'View all statistics', 'ohdear' )
+                        __( 'View all ' . $name, 'ohdear' )
                 );
             ?>
         </p>
