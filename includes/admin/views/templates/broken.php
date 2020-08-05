@@ -35,28 +35,29 @@ if ( empty( $data['id'] ) ||
             <p><?php echo __( 'Last time checked', 'ohdear' ) . ': ' . $data['checks'][2]['latest_run_ended_at']; ?></p>
 
             <table class="wp-list-table widefat striped">
+
                 <thead>
-                <tr>
-                    <th class="column-primary" scope="col">
-                        <?php esc_html_e( 'Status Code', 'ohdear' ); ?>
-                    </th>
 
-                    <th scope="col">
-                        <?php esc_html_e( 'Broken Link', 'ohdear' ); ?>
-                    </th>
+                    <tr>
+                        <th class="column-primary" scope="col"><?php esc_html_e( 'Status Code', 'ohdear' ); ?></th>
 
-                    <th scope="col">
-                        <?php esc_html_e( 'Found on', 'ohdear' ); ?>
-                    </th>
+                        <th scope="col"><?php esc_html_e( 'Broken Link', 'ohdear' ); ?></th>
 
-                    <th scope="col">
-                        <?php esc_html_e( 'Actions', 'ohdear' ); ?>
-                    </th>
-                </tr>
+                        <th scope="col"><?php esc_html_e( 'Found on', 'ohdear' ); ?></th>
+
+                        <?php if ( ! empty( $data['sort_url'] ) && is_current_site( $data['sort_url'] ) ) : ?>
+
+                            <th scope="col"><?php esc_html_e( 'Actions', 'ohdear' ); ?></th>
+
+                        <?php endif; ?>
+                    </tr>
+
                 </thead>
 
                 <tbody>
+
                 <?php foreach ( $broken['data'] as $b_link ) : ?>
+
                     <tr>
                         <td class="column-primary"> <?php echo $b_link['status_code']; ?></td>
 
@@ -64,23 +65,31 @@ if ( empty( $data['id'] ) ||
 
                         <td><?php printf( '<a href="%1$s" target="_blank">%1$s</a>', $b_link['found_on_url'] ); ?></td>
 
-                        <td>
-                            <?php $post_id = url_to_postid( $b_link['found_on_url'] );
+                        <?php if ( ! empty( $data['sort_url'] ) && is_current_site( $data['sort_url'] ) ) : ?>
+
+                            <td>
+                                <?php $post_id = url_to_postid( $b_link['found_on_url'] );
 
                                 if ( $post_id > 0 ) {
 
                                     /* translators: 1: Post edit link, 2: 'Edit' word */
                                     printf( '<a href="%1$s" target="_blank">%2$s</a>',
-                                            admin_url( 'post.php?post=' . $post_id . '&action=edit' ),
-                                            esc_html__( 'Edit', 'ohdear' )
+                                        admin_url( 'post.php?post=' . $post_id . '&action=edit' ),
+                                        esc_html__( 'Edit', 'ohdear' )
                                     );
 
                                 } else { echo '&nbsp;'; }
-                            ?>
-                        </td>
+                                ?>
+                            </td>
+
+                        <?php endif; ?>
+
                     </tr>
+
                 <?php endforeach; ?>
+
                 </tbody>
+
             </table>
 
         <?php else : ?>
