@@ -41,16 +41,13 @@ function is_admin_page() {
  */
 function admin_scripts( $hook_suffix ) {
 
-	if ( is_admin_page() ) {
+    if ( $hook_suffix == 'index.php' )
+        wp_enqueue_script( 'ohdear-admin-dashboard', OHDEAR_PLUGIN_URL . 'assets/js/admin-dashboard.js', array( 'jquery', 'ohdear-apexcharts' ), OHDEAR_VERSION, false );
+
+	if ( is_admin_page() || $hook_suffix == 'index.php' ) {
 
         wp_enqueue_script( 'ohdear-apexcharts', OHDEAR_PLUGIN_URL . 'assets/js/apexcharts.min.js', array(), OHDEAR_VERSION );
         wp_enqueue_style( 'ohdear-admin-css', OHDEAR_PLUGIN_URL . 'assets/css/admin.css', array(), OHDEAR_VERSION );
-    }
-
-    if ( $hook_suffix == 'index.php' ) {
-
-        wp_enqueue_script( 'ohdear-apexcharts', OHDEAR_PLUGIN_URL . 'assets/js/apexcharts.min.js', array(), OHDEAR_VERSION );
-        wp_enqueue_script( 'ohdear-admin-dashboard', OHDEAR_PLUGIN_URL . 'assets/js/admin-dashboard.js', array( 'jquery', 'ohdear-apexcharts' ), OHDEAR_VERSION, false );
     }
 }
 add_action( 'admin_enqueue_scripts', '\OhDear\admin_scripts' );

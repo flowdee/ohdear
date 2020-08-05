@@ -34,65 +34,75 @@ if ( empty( $data['id'] ) ||
 
             <p><?php echo __( 'Last time checked', 'ohdear' ) . ': ' . $data['checks'][2]['latest_run_ended_at']; ?></p>
 
-            <table class="wp-list-table widefat striped">
+            <?php
 
-                <thead>
+           if ( ! empty( $_GET['action'] ) && $_GET['action'] == 'ohdear_load_broken_widget' ) :
 
-                    <tr>
-                        <th class="column-primary" scope="col"><?php esc_html_e( 'Status Code', 'ohdear' ); ?></th>
+               include_once 'broken-widget.php';
 
-                        <th scope="col"><?php esc_html_e( 'Broken Link', 'ohdear' ); ?></th>
+           else : ?>
 
-                        <th scope="col"><?php esc_html_e( 'Found on', 'ohdear' ); ?></th>
+                <table class="wp-list-table widefat striped">
 
-                        <?php if ( ! empty( $data['sort_url'] ) && is_current_site( $data['sort_url'] ) ) : ?>
+                    <thead>
 
-                            <th scope="col"><?php esc_html_e( 'Actions', 'ohdear' ); ?></th>
+                        <tr>
+                            <th class="column-primary" scope="col"><?php esc_html_e( 'Status Code', 'ohdear' ); ?></th>
 
-                        <?php endif; ?>
-                    </tr>
+                            <th scope="col"><?php esc_html_e( 'Broken Link', 'ohdear' ); ?></th>
 
-                </thead>
+                            <th scope="col"><?php esc_html_e( 'Found on', 'ohdear' ); ?></th>
 
-                <tbody>
+                            <?php if ( ! empty( $data['sort_url'] ) && is_current_site( $data['sort_url'] ) ) : ?>
 
-                <?php foreach ( $broken['data'] as $b_link ) : ?>
+                                <th scope="col"><?php esc_html_e( 'Actions', 'ohdear' ); ?></th>
 
-                    <tr>
-                        <td class="column-primary"> <?php echo $b_link['status_code']; ?></td>
+                            <?php endif; ?>
+                        </tr>
 
-                        <td><?php printf( '<a href="%1$s" target="_blank">%1$s</a>', $b_link['crawled_url'] ); ?></td>
+                    </thead>
 
-                        <td><?php printf( '<a href="%1$s" target="_blank">%1$s</a>', $b_link['found_on_url'] ); ?></td>
+                    <tbody>
 
-                        <?php if ( ! empty( $data['sort_url'] ) && is_current_site( $data['sort_url'] ) ) : ?>
+                    <?php foreach ( $broken['data'] as $b_link ) : ?>
 
-                            <td>
-                                <?php $post_id = url_to_postid( $b_link['found_on_url'] );
+                        <tr>
+                            <td class="column-primary"> <?php echo $b_link['status_code']; ?></td>
 
-                                if ( $post_id > 0 ) {
+                            <td><?php printf( '<a href="%1$s" target="_blank">%1$s</a>', $b_link['crawled_url'] ); ?></td>
 
-                                    /* translators: 1: Post edit link, 2: 'Edit' word */
-                                    printf( '<a href="%1$s" target="_blank">%2$s</a>',
-                                        admin_url( 'post.php?post=' . $post_id . '&action=edit' ),
-                                        esc_html__( 'Edit', 'ohdear' )
-                                    );
+                            <td><?php printf( '<a href="%1$s" target="_blank">%1$s</a>', $b_link['found_on_url'] ); ?></td>
 
-                                } else { echo '&nbsp;'; }
-                                ?>
-                            </td>
+                            <?php if ( ! empty( $data['sort_url'] ) && is_current_site( $data['sort_url'] ) ) : ?>
 
-                        <?php endif; ?>
+                                <td>
+                                    <?php $post_id = url_to_postid( $b_link['found_on_url'] );
 
-                    </tr>
+                                    if ( $post_id > 0 ) {
 
-                <?php endforeach; ?>
+                                        /* translators: 1: Post edit link, 2: 'Edit' word */
+                                        printf( '<a href="%1$s" target="_blank">%2$s</a>',
+                                            admin_url( 'post.php?post=' . $post_id . '&action=edit' ),
+                                            esc_html__( 'Edit', 'ohdear' )
+                                        );
 
-                </tbody>
+                                    } else { echo '&nbsp;'; }
+                                    ?>
+                                </td>
 
-            </table>
+                            <?php endif; ?>
 
-        <?php else : ?>
+                        </tr>
+
+                    <?php endforeach; ?>
+
+                    </tbody>
+
+                </table>
+
+           <?php endif;
+
+       else : ?>
 
             <div class="notice notice-warning inline">
                 <p>

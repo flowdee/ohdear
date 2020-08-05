@@ -29,6 +29,15 @@ select[name="ohdear_settings[user_roles_access][]"] {
   border: 1px solid #ddd;
 }
 
+.dashboard__section .community-events-footer p {
+  color: #444;
+}
+
+.dashboard__section .community-events-footer .bold {
+  padding-right: 5px;
+  font-weight: bold;
+}
+
 /** Charts **/
 
 #uptime_chart,
