@@ -1,4 +1,4 @@
-=== OhDear ===
+=== Oh Dear ===
 Contributors: flowdee, kryptonitewp, webdj
 Author URI: https://kryptonitewp.com/
 Plugin URL: https://ohdear.app/
