@@ -8,17 +8,7 @@ namespace OhDear;
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$settings = get_settings();
-
-if ( empty( $settings['api_status'] ) || empty( $settings['site_selector'] ) ) {
-
-// @Todo: finish redirect to settings page
-//    $url = add_query_arg( array( 'page' => OHDEAR_PAGE . '-settings' ), admin_url( 'admin.php' ) );
-//
-//debug_log( '$url: ' . $url );
-//
-//    wp_safe_redirect( $url ); exit;
-} ?>
+$settings = get_settings(); ?>
 
 <h2><?php esc_html_e( 'Oh Dear Monitoring', 'ohdear' ); ?></h2>
 
