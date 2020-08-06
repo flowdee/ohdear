@@ -38,9 +38,23 @@ select[name="ohdear_settings[user_roles_access][]"] {
   font-weight: bold;
 }
 
+
+
 /** Charts **/
 
 #uptime_chart,
 #perf_chart {
   margin: 35px 10px;
+}
+
+/** Dashboard Widgets **/
+#dashboard-widgets .dashboard__section {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+#dashboard-widgets #uptime_chart,
+#dashboard-widgets #perf_chart {
+  margin: 0;
 }
