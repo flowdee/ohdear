@@ -17,70 +17,51 @@ This plugin brings Oh Dear uptime, performance and broken links monitoring into 
 
 Oh Dear monitors uptime, performance, broken links, SSL certificates and more!
 
-= Features =
+### Features
 
-* Display your site's uptime stats
-* Display your site's performance stats
+* Display your site's uptime monitoring
+* Display your site's performance monitoring
 * Display your site's broken links
 * Dashboard widgets
 * Regular updates and improvements: Go through the [changelog](https://wordpress.org/plugins/ohdear/changelog/)
 
-= Quick-start Examples =
+This plugin requires an active [Oh Dear account](https://ohdear.app/).
 
-Enter your API token, select your website and go!
+### Support
 
-= Support =
+* Browse [issue tracker](https://github.com/flowdee/ohdear/issues) on GitHub
 
-* Browse [issue tracker](https://github.com/flowdee/tomparisde-twitchtv-widget/issues) on GitHub
+### Credits
 
-= Credits =
-
-* This plugin is not official made or maintained by Oh Dear. All data provided through the official Oh Dear API.
+This plugin is not official made or maintained by Oh Dear. All data provided through the official [Oh Dear API](https://ohdear.app/docs/integrations/api/introduction).
 
 == Installation ==
 
 The installation and configuration of the plugin is as simple as it can be.
 
-= Using The WordPress Dashboard =
-
-1. Navigate to the 'Add New' in the plugins dashboard
-2. Search for 'oh dear'
-3. Click 'Install Now'
-4. Activate the plugin on the Plugin dashboard
-
-= Uploading in WordPress Dashboard =
-
-1. Navigate to the 'Add New' in the plugins dashboard
-2. Navigate to the 'Upload' area
-3. Select zip file from your computer
-4. Click 'Install Now'
-5. Activate the plugin in the Plugin dashboard
-
-= Using FTP =
-
-1. Download the plugin
-2. Extract the directory to your computer
-3. Upload the directory to the '/wp-content/plugins/' directory
-4. Activate the plugin in the Plugin dashboard
+1. In your WordPress admin area, go to **Plugins > New Plugin**, search for **Oh Dear** and click **Install now**.
+1. Alternatively, [download the plugin files](https://downloads.wordpress.org/plugin/ohdear.trunk.zip) and upload the contents of `ohdear.zip` to your plugins directory, which usually is `/wp-content/plugins/`.
+1. Activate the plugin.
+1. Access the plugin's setting page by browsing to *Oh Dear > Settings* in your WordPress admin area.
+1. Enter your personal API Token which can be found on your [Oh Dear acccount](https://ohdear.app/user-settings/api)
+1. Select the website from which the data will be taken from.
+1. Access the plugin's dashboard page by browsing to *Oh Dear > Dashboard* in your WordPress admin area.
 
 == Frequently Asked Questions ==
 
-= Multisite supported? =
+= What do I need to use this plugin? =
 
-Yes, of course.
+To use this plugin you must have an active [Oh Dear account](https://ohdear.app/).
 
 == Screenshots ==
 
-1. Dashboard Page
-2. Dashboard Widgets
-3. Settings Page
+1. Dashboard Widgets
+2. Uptime Monitoring
+3. Performance Monitoring
+4. Broken Links Monitoring
+5. Settings Page
 
 == Changelog ==
 
-= Version 1.0.0 (7th August 2020) =
-* Initial release
-
-== Upgrade Notice ==
-
-= Version 1.0.0 (7th August 2020) =
-* Initial release
+#### Version 1.0.0 (August 7th, 2020)
+- Initial release
