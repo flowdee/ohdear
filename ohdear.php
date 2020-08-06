@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Oh Dear
  * Plugin URI:      https://wordpress.org/plugins/ohdear/
- * Description:     Websites uptime monitoring.
+ * Description:     This plugin brings Oh Dear uptime, performance and broken links monitoring into your WordPress dashboard.
  * Version:         1.0.0
  * Text Domain:     ohdear
  * Domain Path:     /languages
