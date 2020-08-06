@@ -4,8 +4,13 @@
  * Plugin URI:      https://wordpress.org/plugins/ohdear/
  * Description:     This plugin brings Oh Dear uptime, performance and broken links monitoring into your WordPress dashboard.
  * Version:         1.0.0
+ * Author:          KryptoniteWP
+ * Author URI:      https://kryptonitewp.com
  * Text Domain:     ohdear
  * Domain Path:     /languages
+ *
+ * @author          KryptoniteWP
+ * @copyright       Copyright (c) KryptoniteWP
  */
 
 namespace OhDear;
