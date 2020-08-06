@@ -11,8 +11,6 @@ Oh Dear monitors uptime, performance, broken links, SSL certificates and more!
 
 ### Credits
 
-This plugin is not official made or maintained by Oh Dear. All data provided through the official Oh Dear API.
+This plugin is not official made or maintained by [Oh Dear](https://ohdear.app). All data provided through the official [Oh Dear API](https://ohdear.app/docs/integrations/api/introduction).
 
-This plugin was developed by [flowdee](https://twitter.com/flowdee) and the [flowdee](https://kryptonitewp.com) team. 
-
-You like our work? [Support me](https://donate.flowdee.de/) or not. We don't mind, as long as we were able to help you :wink:
+This plugin was developed by [flowdee](https://twitter.com/flowdee) and the [KryptoniteWP](https://kryptonitewp.com) team.
