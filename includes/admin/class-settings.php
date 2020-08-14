@@ -441,7 +441,7 @@ class OhDear_Settings {
 
         $status = __( ( $api_status ) ? 'Connected' : 'Disconnected', 'ohdear' );
 
-        return '<span class="api-status ' . $class . '">' . $status . '</span>';
+        return '<span class="ohdear-api-status ' . $class . '">' . $status . '</span>';
     }
 
     /**

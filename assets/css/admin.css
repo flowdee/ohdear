@@ -1,7 +1,7 @@
 
 /** Api Status **/
 
-.api-status {
+.ohdear-api-status {
   font-weight: bold;
 }
 
@@ -11,17 +11,17 @@ select[name="ohdear_settings[user_roles_access][]"] {
   min-height: 150px;
 }
 
-.api-status.connected {
+.ohdear-api-status.connected {
   color: green;
 }
 
-.api-status.disconnected {
+.ohdear-api-status.disconnected {
   color: red;
 }
 
 /** Monitoring Dashboard Section **/
 
-.dashboard__section {
+.ohdear-dashboard__section {
   margin: 20px 0;
   padding: 15px 30px;
   background: white;
@@ -29,32 +29,31 @@ select[name="ohdear_settings[user_roles_access][]"] {
   border: 1px solid #ddd;
 }
 
-.dashboard__section .community-events-footer p {
+.ohdear-dashboard__section .community-events-footer p {
   color: #444;
 }
 
-.dashboard__section .community-events-footer .bold {
+.ohdear-dashboard__section .community-events-footer .bold {
   padding-right: 5px;
   font-weight: bold;
 }
 
 
-
 /** Charts **/
 
-#uptime_chart,
-#perf_chart {
+#ohdear-uptime_chart,
+#ohdear-perf_chart {
   margin: 35px 10px;
 }
 
 /** Dashboard Widgets **/
-#dashboard-widgets .dashboard__section {
+#dashboard-widgets .ohdear-dashboard__section {
   padding: 0;
   margin: 0;
   border: none;
 }
 
-#dashboard-widgets #uptime_chart,
-#dashboard-widgets #perf_chart {
+#dashboard-widgets #ohdear-uptime_chart,
+#dashboard-widgets #ohdear-perf_chart {
   margin: 0;
 }

@@ -15,7 +15,7 @@ if ( empty( $data['id'] ) ||
     return;
 } ?>
 
-<div class="dashboard__section">
+<div class="ohdear-dashboard__section">
 
     <h3><?php echo __( 'Performance', 'ohdear' ) . '&nbsp;&nbsp;';
 
@@ -55,7 +55,7 @@ if ( empty( $data['id'] ) ||
 
                 <p><?php echo __( 'Last 7 days', 'ohdear' ) . '. ' . __( 'Last time checked', 'ohdear' ) . ': ' . $data['checks'][1]['latest_run_ended_at']; ?></p>
 
-                <div id="perf_chart"></div>
+                <div id="ohdear-perf_chart"></div>
 
                 <script>
                   var
@@ -180,7 +180,7 @@ if ( empty( $data['id'] ) ||
                       }
                     },
 
-                    chart = new ApexCharts(document.querySelector( "#perf_chart" ), options);
+                    chart = new ApexCharts(document.querySelector( "#ohdear-perf_chart" ), options);
 
                   chart.render();
                 </script>
@@ -197,4 +197,4 @@ if ( empty( $data['id'] ) ||
 
         <?php endif; ?>
 
-</div><!-- /.dashboard__section -->
+</div><!-- /.ohdear-dashboard__section -->

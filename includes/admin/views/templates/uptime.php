@@ -14,7 +14,7 @@ if ( empty( $data['id'] ) ||
     return;
 } ?>
 
-<div class="dashboard__section">
+<div class="ohdear-dashboard__section">
 
     <h3><?php echo __( 'Uptime', 'ohdear' ) . '&nbsp;&nbsp;';
 
@@ -50,7 +50,7 @@ if ( empty( $data['id'] ) ||
                     );
                 ?></p>
 
-                <div id="uptime_chart"></div>
+                <div id="ohdear-uptime_chart"></div>
 
                 <script>
                   var
@@ -101,7 +101,7 @@ if ( empty( $data['id'] ) ||
                       }
                     },
 
-                    chart = new ApexCharts(document.querySelector( "#uptime_chart" ), options);
+                    chart = new ApexCharts(document.querySelector( "#ohdear-uptime_chart" ), options);
 
                   chart.render();
                 </script>
@@ -118,4 +118,4 @@ if ( empty( $data['id'] ) ||
 
         <?php endif; ?>
 
-</div><!-- /.dashboard__section -->
+</div><!-- /.ohdear-dashboard__section -->

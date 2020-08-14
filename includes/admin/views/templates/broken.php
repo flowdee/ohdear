@@ -15,7 +15,7 @@ if ( empty( $data['id'] ) ||
     return;
 } ?>
 
-<div class="dashboard__section">
+<div class="ohdear-dashboard__section">
 
     <h3><?php echo __( 'Broken Links', 'ohdear' ) . '&nbsp;&nbsp;';
 
@@ -112,4 +112,4 @@ if ( empty( $data['id'] ) ||
 
         <?php endif; ?>
 
-</div><!-- /.dashboard__section -->
+</div><!-- /.ohdear-dashboard__section -->
