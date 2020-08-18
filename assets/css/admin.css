@@ -1,3 +1,12 @@
+/** General **/
+.ohdear-ask-for-review {
+  vertical-align: middle;
+}
+
+.ohdear-ask-for-review .dashicons {
+  color: gold;
+  vertical-align: -17%;
+}
 
 /** Api Status **/
 

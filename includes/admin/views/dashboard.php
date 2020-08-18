@@ -12,6 +12,10 @@ $settings = get_settings(); ?>
 
 <h2><?php esc_html_e( 'Oh Dear Monitoring', 'ohdear' ); ?></h2>
 
+<p class="ohdear-ask-for-review">
+    <span class="dashicons dashicons-star-filled"></span> <?php printf( wp_kses( __( '<strong>Do you enjoy using Oh Dear</strong>? Then please <strong><a href="%s" target="_blank">leave a short review</a></strong> about the plugin on WordPress.org. This helps a lot!', 'ohdear' ), array(  'a' => array( 'href' => array(), 'target' => '_blank' ), 'strong' => array() ) ), esc_url( 'https://wordpress.org/support/plugin/ohdear/reviews/#new-post' ) ); ?>
+</p>
+
 <?php if ( empty( $settings['api_status'] ) ) : ?>
 
     <div class="notice notice-warning inline">
