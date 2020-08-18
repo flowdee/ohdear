@@ -1,13 +1,13 @@
-=== Oh Dear ===
+=== Oh Dear - Monitor Uptime, Performance and Broken Links ===
 Contributors: flowdee, kryptonitewp, webdj
 Author URI: https://kryptonitewp.com/
 Plugin URL: https://ohdear.app/
 Donate link: https://donate.flowdee.de
 Tags: ohdear, uptime, performance, broken links
-Requires at least: 4.0
+Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 5.5
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -62,6 +62,11 @@ To use this plugin you must have an active [Oh Dear account](https://ohdear.app/
 5. Settings Page
 
 == Changelog ==
+
+#### Version 1.0.1 (August 18th, 2020)
+- New: Added a friendly demand for a plugin review to the dashboard page
+- Tweak: Prefixed CSS classes to avoid third-party conflicts
+- WordPress v5.5 compatibility
 
 #### Version 1.0.0 (August 7th, 2020)
 - Initial release
