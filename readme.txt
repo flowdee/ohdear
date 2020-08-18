@@ -3,10 +3,10 @@ Contributors: flowdee, kryptonitewp, webdj
 Author URI: https://kryptonitewp.com/
 Plugin URL: https://ohdear.app/
 Donate link: https://donate.flowdee.de
-Tags: ohdear, uptime, performance, broken links, metrics, analytics, statistics, stats, charts, diagram, uptime monitoring, performance monitoring, dashboard, flowdee
+Tags: ohdear, uptime, performance, broken links
 Requires at least: 4.0
 Requires PHP: 5.6
-Tested up to: 5.4.2
+Tested up to: 5.5
 Stable tag: 1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
