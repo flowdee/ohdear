@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Redirect to plugin settings page if not connected to API
  */
-function my_admin_temporarily_redirect_dashboard_page() {
+function admin_temporarily_redirect_dashboard_page() {
 
     //debug_log( __FUNCTION__ );
 
@@ -30,4 +30,4 @@ function my_admin_temporarily_redirect_dashboard_page() {
         exit;
     }
 }
-add_action( 'admin_init', '\OhDear\my_admin_temporarily_redirect_dashboard_page' );
+add_action( 'admin_init', '\OhDear\admin_temporarily_redirect_dashboard_page' );
