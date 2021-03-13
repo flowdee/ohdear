@@ -147,6 +147,25 @@ function get_site_id( $site_selector = '' ) {
 }
 
 /**
+ * Check current user role access
+ *
+ * @return bool
+ */
+function is_user_roles_granted() {
+
+    if ( empty( get_setting( 'user_roles_access' ) ) ) {
+
+        debug_log( 'ERROR: ' . __FUNCTION__ . ' >> ' . 'user_roles_access is not set' );
+        return false;
+    }
+
+    if ( empty( array_intersect( wp_get_current_user()->roles, get_setting( 'user_roles_access' ) ) ) )
+        return false;
+
+    return true;
+}
+
+/**
  * Debug logging
  *
  * @param $message
@@ -161,6 +180,3 @@ function debug_log( $message ) {
         }
     }
 }
-
-//delete_settings();
-//delete_cache();

@@ -20,6 +20,9 @@ function register_dashboard_widgets() {
     if ( empty( $settings['api_status'] ) || empty( $settings['site_selector'] ) )
         return;
 
+    if ( ! is_user_roles_granted() )
+        return;
+
     wp_add_dashboard_widget( 'dashboard_ohdear_uptime',      __( 'Oh Dear Uptime','ohdear' ),       '\OhDear\render_dashboard_widget' );
     wp_add_dashboard_widget( 'dashboard_ohdear_performance', __( 'Oh Dear Performance','ohdear' ),  '\OhDear\render_dashboard_widget' );
     wp_add_dashboard_widget( 'dashboard_ohdear_broken',      __( 'Oh Dear Broken Links','ohdear' ), '\OhDear\render_dashboard_widget' );
@@ -128,6 +131,9 @@ function prepare_widget_data() {
     $settings = get_settings();
 
     if ( empty( $settings['api_status'] ) || empty( $settings['site_selector'] ) )
+        return false;
+
+    if ( ! is_user_roles_granted() )
         return false;
 
     $data = get_site_data( $settings['site_selector'] );

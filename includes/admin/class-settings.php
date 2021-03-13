@@ -215,8 +215,11 @@ class OhDear_Settings {
             }
 
             // Admins always have access
-            if ( $key == 'user_roles_access' )
-                $input[ $key ][] = 'administrator';
+            if ( $key == 'user_roles_access' ) {
+
+                if ( ! in_array( 'administrator', $input[ $key ] ) )
+                    $input[ $key ][] = 'administrator';
+            }
 
             /**
              * General setting sanitization filter
@@ -299,8 +302,14 @@ class OhDear_Settings {
             $selected = array();
         }
 
-        if ( 'user_roles_access' == $args['id'] )
+        // Admins always have access
+        if ( 'user_roles_access' == $args['id'] ) {
+            ?>
+            <option <?php selected( true ); ?> value="<?php esc_attr_e( 'administrator' ); ?>"><?php echo '=== ' . __( 'default' ) . ' ==='; ?></option>
+            <?php PHP_EOL;
+
             $this->user_roles_render( $selected );
+        }
 
         echo '</select>';
         echo '<p class="description"> '  . $args['desc'] . '</p>';
@@ -456,10 +465,13 @@ class OhDear_Settings {
             // Admins always have access
             if ( $role == 'administrator' )
                 continue;
+
+            // Allow 'editor' role
+            if ( $role != 'editor' )
+                continue;
             ?>
             <option <?php selected( in_array( $role, $selected ), true, true ); ?>value="<?php esc_attr_e( $role ); ?>"><?php echo translate_user_role( $details['name'] ); ?></option>
-            <?php PHP_EOL; ?>
-            <?php
+            <?php PHP_EOL;
         }
     }
 
