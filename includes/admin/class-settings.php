@@ -465,10 +465,6 @@ class OhDear_Settings {
             // Admins always have access
             if ( $role == 'administrator' )
                 continue;
-
-            // Allow 'editor' role
-            if ( $role != 'editor' )
-                continue;
             ?>
             <option <?php selected( in_array( $role, $selected ), true, true ); ?>value="<?php esc_attr_e( $role ); ?>"><?php echo translate_user_role( $details['name'] ); ?></option>
             <?php PHP_EOL;
