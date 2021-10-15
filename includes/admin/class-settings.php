@@ -261,7 +261,7 @@ class OhDear_Settings {
                     'desc' => /* translators: OhDear page link */
                               sprintf( wp_kses( __( 'Enter your OhDear API token, found on your <a href="%s" target="_blank">OhDear api settings page</a>', 'ohdear' ),
                                                 array( 'a' => array( 'href' => array(), 'target' => array() ) )
-                                       ), esc_url( 'https://ohdear.app/user-settings/api' ) ),
+                                       ), esc_url( 'https://ohdear.app/user/api-tokens' ) ),
                 ),
 
                 'site_selector' => array(
