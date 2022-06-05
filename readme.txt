@@ -2,7 +2,7 @@
 Contributors: flowdee, kryptonitewp, webdj
 Author URI: https://kryptonitewp.com/
 Plugin URL: https://ohdear.app/
-Donate link: https://donate.flowdee.de
+Donate link: https://github.com/sponsors/flowdee
 Tags: ohdear, uptime, performance, broken links
 Requires at least: 5.0
 Requires PHP: 5.6
