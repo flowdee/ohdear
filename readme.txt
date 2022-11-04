@@ -6,8 +6,8 @@ Donate link: https://github.com/sponsors/flowdee
 Tags: ohdear, uptime, performance, broken links
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 5.5
-Stable tag: 1.0.1
+Tested up to: 6.1
+Stable tag: 1.0.2
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -62,6 +62,12 @@ To use this plugin you must have an active [Oh Dear account](https://ohdear.app/
 5. Settings Page
 
 == Changelog ==
+
+#### Version 1.0.2 (November 4th, 2022)
+- Tweak: Redesign of icon, logo, header image
+- Tweak: Updated the API token page link
+- Tweak: Granted the Editor user role
+- WordPress v6.1 compatibility
 
 #### Version 1.0.1 (August 18th, 2020)
 - New: Added a friendly demand for a plugin review to the dashboard page
