@@ -15,7 +15,7 @@ This plugin brings Oh Dear uptime, performance and broken links monitoring into 
 
 == Description ==
 
-Oh Dear monitors uptime, performance, broken links, SSL certificates and more!
+Oh Dear is website health monitoring for your entire site, not just the homepage. It monitors uptime, performance, broken links, SSL certificates and more.
 
 ### Features
 
