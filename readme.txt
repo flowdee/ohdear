@@ -43,7 +43,7 @@ The installation and configuration of the plugin is as simple as it can be.
 1. Alternatively, [download the plugin files](https://downloads.wordpress.org/plugin/ohdear.trunk.zip) and upload the contents of `ohdear.zip` to your plugins directory, which usually is `/wp-content/plugins/`.
 1. Activate the plugin.
 1. Access the plugin's setting page by browsing to *Oh Dear > Settings* in your WordPress admin area.
-1. Enter your personal API Token which can be found on your [Oh Dear acccount](https://ohdear.app/user-settings/api)
+1. Enter your personal API Token which can be found on your [Oh Dear account](https://ohdear.app/user/api-tokens)
 1. Select the website from which the data will be taken from.
 1. Access the plugin's dashboard page by browsing to *Oh Dear > Dashboard* in your WordPress admin area.
 
